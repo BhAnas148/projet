@@ -1,0 +1,78 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+    Gestion des Sous-Catégories
+{% endblock title %}
+
+{% block breadcrumb %}
+<div class="row">
+    <div class="col-sm-6">
+        <h3 class="mb-0">Gestion des Sous-Catégories</h3>
+    </div>
+    <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-end">
+            <li class="breadcrumb-item"><a href="/">Accueil</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Sous-Catégories</li>
+        </ol>
+    </div>
+</div>
+{% endblock breadcrumb %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-6">
+                <h3 class="card-title">Liste des Sous-Catégories</h3>
+            </div>
+            <div class="col-6">
+                <a href="{{ url_for('sous_categorie.create') }}" class="btn btn-primary float-end">Ajouter une Sous-Catégorie</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th style="width: 10px">#</th>
+                    <th>Nom</th>
+                    <th>Catégorie</th>
+                    <th style="width: 30%">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sous_categorie in sous_categories %}
+                <tr class="align-middle">
+                    <td>{{ sous_categorie.id }}</td>
+                    <td>{{ sous_categorie.nom }}</td>
+                    <td>{{ sous_categorie.categorie.nom }}</td>
+                    <td>
+                        <!-- Bouton Détails sans lien, juste pour le style -->
+                        <button class="btn btn-dark me-2" >Détails</button>
+
+                        <!-- Bouton Modifier -->
+                        <a href="{{ url_for('sous_categorie.update', sous_categorie_id=sous_categorie.id) }}" class="btn btn-warning btn-sm me-2">Modifier</a>
+
+                        <!-- Formulaire de suppression -->
+                        <form action="{{ url_for('sous_categorie.delete', sous_categorie_id=sous_categorie.id) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Supprimer cette sous-catégorie ?')">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4" class="text-center">Aucune sous-catégorie trouvée.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+    document.getElementById('menu_sous_categories').classList.add('active');
+</script>
+{% endblock js %}

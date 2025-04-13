@@ -1,0 +1,43 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+<h1>Produits</h1>
+<a href="{{ url_for('produit.create') }}" class="btn btn-primary">Ajouter un Produit</a>
+<table class="table mt-3">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Designation</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th>Sous-Category</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for produit in produits %}
+        <tr>
+            <td>{{ produit.id }}</td>
+            <td>{{ produit.designation }}</td>
+            <td>{{ produit.description }}</td>
+            <td>{{ produit.prix_vente }}</td>
+            <td>{{ produit.categorie.nom }}</td>
+            <td>{{ produit.sous_categorie.nom }}</td>
+            <td>
+                <!-- Bouton Détails (sans URL) -->
+                <button class="btn btn-dark btn-sm me-2" onclick="alert('Détails du produit : {{ produit.designation }}')">Détails</button>
+
+                <!-- Bouton Modifier -->
+                <a href="{{ url_for('produit.update', produit_id=produit.id) }}" class="btn btn-warning btn-sm me-2">Modifier</a>
+
+                <!-- Formulaire de suppression -->
+                <form action="{{ url_for('produit.delete', produit_id=produit.id) }}" method="POST" style="display:inline;">
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Supprimer ce produit ?')">Supprimer</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

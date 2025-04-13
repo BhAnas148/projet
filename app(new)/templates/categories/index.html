@@ -1,0 +1,71 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+Gestion des Catégories
+{% endblock title %}
+
+{% block breadcrumb %}
+<div class="row">
+    <div class="col-sm-6">
+        <h3 class="mb-0">Gestion des Catégories</h3>
+    </div>
+    <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-end">
+            <li class="breadcrumb-item"><a href="/">Accueil</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Catégories</li>
+        </ol>
+    </div>
+</div>
+{% endblock breadcrumb %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-6">
+                <h3 class="card-title">Liste des Catégories</h3>
+            </div>
+            <div class="col-6">
+                <a href="{{ url_for('categorie.create') }}" class="btn btn-primary float-end">Ajouter</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th style="width: 10px">#</th>
+                    <th>Nom</th>
+                    <th style="width: 30%">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for categorie in categories %}
+                <tr class="align-middle">
+                    <td>{{ categorie.id }}</td>
+                    <td>{{ categorie.nom }}</td>
+                    <td>
+                        <a href="/categories/details/{{ categorie.id }}" class="btn btn-dark">Détails</a>
+                        <a href="{{ url_for('categorie.update', categorie_id=categorie.id) }}" class="btn btn-warning btn-sm">Modifier</a>
+                        <form action="{{ url_for('categorie.delete', categorie_id=categorie.id) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Supprimer cette catégorie ?')">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="3" class="text-center">Aucune catégorie trouvée.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+    document.getElementById('menu_categories').classList.add('active');
+</script>
+{% endblock js %}

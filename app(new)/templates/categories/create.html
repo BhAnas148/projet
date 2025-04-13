@@ -1,0 +1,66 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+Gestion des Catégories | Ajouter Catégorie
+{% endblock title %}
+
+{% block breadcrumb %}
+<div class="row">
+    <div class="col-sm-6">
+        <h3 class="mb-0">Gestion des Catégories</h3>
+    </div>
+    <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-end">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/categories">Catégories</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Ajouter</li>
+        </ol>
+    </div>
+</div>
+{% endblock breadcrumb %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-6">
+                <h3 class="card-title">Ajouter Catégorie</h3>
+            </div>
+            <div class="col-6">
+                <a href="{{ url_for('categorie.index') }}" class="btn btn-dark float-end">Retour</a>
+            </div>
+        </div>
+    </div>
+
+    {% if error %}
+    <div class="alert alert-danger mx-4 mt-3">{{ error }}</div>
+    {% endif %}
+
+    <form method="POST" action="{{ url_for('categorie.create') }}">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-6 offset-3">
+                    <div class="mb-3">
+                        <label for="nom" class="form-label">Nom de la catégorie</label>
+                        <input type="text" class="form-control" id="nom" name="nom" required />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <div class="row">
+                <div class="col-6 offset-3">
+                    <button type="submit" class="btn btn-primary">Créer</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+    document.getElementById('menu_categories').classList.add('active');
+</script>
+{% endblock js %}
