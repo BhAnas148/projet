@@ -10,7 +10,7 @@ fournisseur_routes = Blueprint(
 
 @fournisseur_routes.route('/')
 def index():
-    fournisseurs = UserController.read_all_by_role('fournisseur')
+    fournisseurs = UserController.read_all()
     return render_template('fournisseurs/index.html', fournisseurs=fournisseurs)
 
 
@@ -18,11 +18,16 @@ def index():
 def create():
     if request.method == 'POST':
         data = {
-            'nom': request.form['nom'],
-            'prenom': request.form['prenom'],
-            'email': request.form['email'],
-            'mot_de_passe': request.form['mot_de_passe'],
-            'role': UserRole.fournisseur.value
+          
+            'nom' : request.form['nom'],
+            'prenom' : '',
+            'date_de_naissance' : '1900-01-01',
+            'telephone' : request.form['telephone'],
+            'ville' : request.form['ville'],
+            'adresse' : request.form['adresse'],
+            'email' : request.form['email'],
+            'mot_de_passe' : '',
+            'role' : 'fournisseur'
         }
         success, result = UserController.create(data)
         if success:

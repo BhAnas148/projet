@@ -1,7 +1,7 @@
 {% extends "layouts/base.html" %}
 
 {% block title %}
-    Gestion des Sous-Catégories
+Gestion des Sous-Catégories
 {% endblock title %}
 
 {% block breadcrumb %}
@@ -26,7 +26,7 @@
                 <h3 class="card-title">Liste des Sous-Catégories</h3>
             </div>
             <div class="col-6">
-                <a href="{{ url_for('sous_categorie.create') }}" class="btn btn-primary float-end">Ajouter une Sous-Catégorie</a>
+                <a href="{{ url_for('sous_categorie.create') }}" class="btn btn-primary float-end">Ajouter</a>
             </div>
         </div>
     </div>
@@ -35,10 +35,10 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th style="width: 10px">#</th>
-                    <th>Nom</th>
+                    <th>#</th>
+                    <th>Sous-Catégorie</th>
                     <th>Catégorie</th>
-                    <th style="width: 30%">Actions</th>
+                    <th class="text-center" style="width: 30%">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -47,16 +47,17 @@
                     <td>{{ sous_categorie.id }}</td>
                     <td>{{ sous_categorie.nom }}</td>
                     <td>{{ sous_categorie.categorie.nom }}</td>
-                    <td>
-                        <!-- Bouton Détails sans lien, juste pour le style -->
-                        <button class="btn btn-dark me-2" >Détails</button>
+                    <td class="text-center">
 
                         <!-- Bouton Modifier -->
-                        <a href="{{ url_for('sous_categorie.update', sous_categorie_id=sous_categorie.id) }}" class="btn btn-warning btn-sm me-2">Modifier</a>
+                        <a href="{{ url_for('sous_categorie.update', sous_categorie_id=sous_categorie.id) }}"
+                            class="btn btn-warning btn-sm me-2">Modifier</a>
 
                         <!-- Formulaire de suppression -->
-                        <form action="{{ url_for('sous_categorie.delete', sous_categorie_id=sous_categorie.id) }}" method="POST" style="display:inline;">
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Supprimer cette sous-catégorie ?')">Supprimer</button>
+                        <form action="{{ url_for('sous_categorie.delete', sous_categorie_id=sous_categorie.id) }}"
+                            method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm"
+                                onclick="return confirm('Supprimer cette sous-catégorie ?')">Supprimer</button>
                         </form>
                     </td>
                 </tr>

@@ -1,7 +1,7 @@
 {% extends "layouts/base.html" %}
 
 {% block title %}
-    Gestion des Sous-Catégories | Ajouter une Sous-Catégorie
+Gestion des Sous-Catégories | Ajouter une Sous-Catégorie
 {% endblock title %}
 
 {% block breadcrumb %}
@@ -12,7 +12,7 @@
     <div class="col-sm-6">
         <ol class="breadcrumb float-sm-end">
             <li class="breadcrumb-item"><a href="/">Accueil</a></li>
-            <li class="breadcrumb-item"><a href="/sous_categorie">Sous-Catégories</a></li>
+            <li class="breadcrumb-item"><a href="/sous-categories">Sous-Catégories</a></li>
             <li class="breadcrumb-item active" aria-current="page">Ajouter</li>
         </ol>
     </div>
@@ -27,7 +27,7 @@
                 <h3 class="card-title">Ajouter Sous-Catégorie</h3>
             </div>
             <div class="col-6">
-                <a href="/sous_categorie" class="btn btn-dark float-end">Retour</a>
+                <a href="/sous-categories" class="btn btn-dark float-end">Retour</a>
             </div>
         </div>
     </div>
@@ -57,8 +57,11 @@
 
         <div class="card-footer">
             <div class="row">
-                <div class="col-6 offset-3">
-                    <button type="submit" class="btn btn-primary">Créer</button>
+                <div class="col-3 offset-3">
+                    <a href="/sous-categories" class="btn w-100 btn-dark">Annuler</a>
+                </div>
+                <div class="col-3">
+                    <button type="submit" class="btn w-100 btn-primary">Ajouter</button>
                 </div>
             </div>
         </div>
@@ -68,6 +71,6 @@
 
 {% block js %}
 <script>
-    document.getElementById('menu_sous_categorie').classList.add('active');
+    document.getElementById('menu_sous_categories').classList.add('active');
 </script>
 {% endblock js %}

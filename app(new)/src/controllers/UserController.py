@@ -17,7 +17,7 @@ class UserController:
         user = User(
             nom=data['nom'],
             prenom=data['prenom'],
-            date_naissance=data['date_naissance'],
+            date_de_naissance=data['date_de_naissance'],
             telephone=data['telephone'],
             ville=data['ville'],
             adresse=data['adresse'],

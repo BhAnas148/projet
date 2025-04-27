@@ -1,43 +1,84 @@
 {% extends "layouts/base.html" %}
 
+{% block title %}
+Gestion des Produits
+{% endblock title %}
+
+{% block breadcrumb %}
+<div class="row">
+    <div class="col-sm-6">
+        <h3 class="mb-0">Gestion des Produits</h3>
+    </div>
+    <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-end">
+            <li class="breadcrumb-item"><a href="/">Accueil</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Produits</li>
+        </ol>
+    </div>
+</div>
+{% endblock breadcrumb %}
+
 {% block content %}
-<h1>Produits</h1>
-<a href="{{ url_for('produit.create') }}" class="btn btn-primary">Ajouter un Produit</a>
-<table class="table mt-3">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Designation</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Category</th>
-            <th>Sous-Category</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for produit in produits %}
-        <tr>
-            <td>{{ produit.id }}</td>
-            <td>{{ produit.designation }}</td>
-            <td>{{ produit.description }}</td>
-            <td>{{ produit.prix_vente }}</td>
-            <td>{{ produit.categorie.nom }}</td>
-            <td>{{ produit.sous_categorie.nom }}</td>
-            <td>
-                <!-- Bouton Détails (sans URL) -->
-                <button class="btn btn-dark btn-sm me-2" onclick="alert('Détails du produit : {{ produit.designation }}')">Détails</button>
+<div class="card mb-4">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-6">
+                <h3 class="card-title">Liste des Produits</h3>
+            </div>
+            <div class="col-6">
+                <a href="{{ url_for('produit.create') }}" class="btn btn-primary float-end">Ajouter</a>
+            </div>
+        </div>
+    </div>
 
-                <!-- Bouton Modifier -->
-                <a href="{{ url_for('produit.update', produit_id=produit.id) }}" class="btn btn-warning btn-sm me-2">Modifier</a>
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Designation</th>
+                    <th>Description</th>
+                    <th>Prix</th>
+                    <th>Catégorie</th>
+                    <th>Sous-Catégorie</th>
+                    <th class="text-center" style="width: 30%">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for produit in produits %}
+                <tr class="align-middle">
+                    <td>{{ produit.id }}</td>
+                    <td>{{ produit.designation }}</td>
+                    <td>{{ produit.description }}</td>
+                    <td>{{ produit.prix_vente }}</td>
+                    <td>{{ produit.categorie.nom }}</td>
+                    <td>{{ produit.sous_categorie.nom }}</td>
+                    <td class="text-center">
+                        <a href="" class="btn btn-dark btn-sm">Détails</a>
 
-                <!-- Formulaire de suppression -->
-                <form action="{{ url_for('produit.delete', produit_id=produit.id) }}" method="POST" style="display:inline;">
-                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Supprimer ce produit ?')">Supprimer</button>
-                </form>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-{% endblock %}
+                        <a href="{{ url_for('produit.update', produit_id=produit.id) }}"
+                            class="btn btn-warning btn-sm">Modifier</a>
+
+                        <form action="{{ url_for('produit.delete', produit_id=produit.id) }}" method="POST"
+                            style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm"
+                                onclick="return confirm('Supprimer ce produit ?')">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="7" class="text-center">Aucun produit trouvé.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+    document.getElementById('menu_produits').classList.add('active');
+</script>
+{% endblock js %}

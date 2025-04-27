@@ -35,9 +35,9 @@ Gestion des Catégories
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th style="width: 10px">#</th>
-                    <th>Nom</th>
-                    <th style="width: 30%">Actions</th>
+                    <th>#</th>
+                    <th>Catégorie</th>
+                    <th class="text-center" width="20%">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -45,11 +45,13 @@ Gestion des Catégories
                 <tr class="align-middle">
                     <td>{{ categorie.id }}</td>
                     <td>{{ categorie.nom }}</td>
-                    <td>
-                        <a href="/categories/details/{{ categorie.id }}" class="btn btn-dark">Détails</a>
-                        <a href="{{ url_for('categorie.update', categorie_id=categorie.id) }}" class="btn btn-warning btn-sm">Modifier</a>
-                        <form action="{{ url_for('categorie.delete', categorie_id=categorie.id) }}" method="POST" style="display:inline;">
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Supprimer cette catégorie ?')">Supprimer</button>
+                    <td class="text-center">
+                        <a href="{{ url_for('categorie.update', categorie_id=categorie.id) }}"
+                            class="btn btn-warning btn-sm">Modifier</a>
+                        <form action="{{ url_for('categorie.delete', categorie_id=categorie.id) }}" method="POST"
+                            style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm"
+                                onclick="return confirm('Supprimer cette catégorie ?')">Supprimer</button>
                         </form>
                     </td>
                 </tr>

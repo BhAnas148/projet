@@ -1,24 +1,80 @@
 {% extends "layouts/base.html" %}
+
+{% block title %}
+Gestion des Sous-Catégories | Modifier une Sous-Catégorie
+{% endblock title %}
+
+{% block breadcrumb %}
+<div class="row">
+    <div class="col-sm-6">
+        <h3 class="mb-0">Gestion des Sous-Catégories</h3>
+    </div>
+    <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-end">
+            <li class="breadcrumb-item"><a href="/">Accueil</a></li>
+            <li class="breadcrumb-item"><a href="/sous-categories">Sous-Catégories</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Modifier</li>
+        </ol>
+    </div>
+</div>
+{% endblock breadcrumb %}
+
 {% block content %}
-<h1>Edit Sous-Categorie</h1>
-{% if error %}
-<div class="alert alert-danger">{{ error }}</div>
-{% endif %}
-<form action="{{ url_for('sous_categorie.update', sous_categorie_id=sous_categorie.id) }}" method="POST">
-    <div class="form-group">
-        <label for="nom">Sous-Categorie Name</label>
-        <input type="text" id="nom" name="nom" class="form-control" value="{{ sous_categorie.nom }}" required>
+<div class="card mb-4">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-6">
+                <h3 class="card-title">Modifier Sous-Catégorie</h3>
+            </div>
+            <div class="col-6">
+                <a href="/sous-categories" class="btn btn-dark float-end">Retour</a>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <label for="categorie_id">Category</label>
-        <select id="categorie_id" name="categorie_id" class="form-control" required>
-            {% for category in categories %}
-            <option value="{{ category.id }}" {% if category.id==sous_categorie.categorie_id %} selected {% endif %}>
-                {{ category.nom }}
-            </option>
-            {% endfor %}
-        </select>
-    </div>
-    <button type="submit" class="btn btn-primary mt-3">Update</button>
-</form>
-{% endblock %}
+
+    <form action="{{ url_for('sous_categorie.update', sous_categorie_id=sous_categorie.id) }}" method="POST">
+        <div class="card-body">
+            {% if error %}
+            <div class="alert alert-danger">{{ error }}</div>
+            {% endif %}
+            <div class="row">
+                <div class="col-6 offset-3">
+                    <div class="mb-3">
+                        <label for="nom" class="form-label">Nom de la Sous-Catégorie</label>
+                        <input type="text" class="form-control" id="nom" name="nom" value="{{ sous_categorie.nom }}"
+                            required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="categorie_id" class="form-label">Catégorie</label>
+                        <select id="categorie_id" name="categorie_id" class="form-control" required>
+                            {% for category in categories %}
+                            <option value="{{ category.id }}" {% if category.id==sous_categorie.categorie_id
+                                %}selected{% endif %}>
+                                {{ category.nom }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <div class="row">
+                <div class="col-3 offset-3">
+                    <a href="/sous-categories" class="btn w-100 btn-dark">Annuler</a>
+                </div>
+                <div class="col-3">
+                    <button type="submit" class="btn w-100 btn-primary">Modifier</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+    document.getElementById('menu_sous_categories').classList.add('active');
+</script>
+{% endblock js %}

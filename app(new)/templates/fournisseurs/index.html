@@ -1,0 +1,72 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+Gestion des Fournisseurs
+{% endblock title %}
+
+{% block breadcrumb %}
+<div class="row">
+    <div class="col-sm-6">
+        <h3 class="mb-0">Gestion des Fournisseurs</h3>
+    </div>
+    <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-end">
+            <li class="breadcrumb-item"><a href="/">Accueil</a></li>
+            <li class="breadcrumb-item active">Fournisseurs</li>
+        </ol>
+    </div>
+</div>
+{% endblock breadcrumb %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-6">
+                <h3 class="card-title">Liste des Fournisseurs</h3>
+            </div>
+            <div class="col-6">
+                <a href="{{ url_for('fournisseur.create') }}" class="btn btn-primary float-end">Ajouter</a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Fournisseur</th>
+                    <th>Email</th>
+                    <th>Téléphone</th>
+                    <th>Ville</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for fournisseur in fournisseurs %}
+                <tr>
+                    <td>{{ fournisseur.nom }}</td> 
+                    <td>{{ fournisseur.email }}</td>
+                    <td>{{ fournisseur.telephone }}</td>
+                    <td>{{ fournisseur.ville }}</td>
+                    <td>
+                        <a href="{{ url_for('fournisseur.details', fournisseur_id=fournisseur.id) }}" class="btn btn-info btn-sm">Détails</a>
+                        <a href="{{ url_for('fournisseur.update', fournisseur_id=fournisseur.id) }}" class="btn btn-warning btn-sm">Modifier</a>
+                        <a href="{{ url_for('fournisseur.delete', fournisseur_id=fournisseur.id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr ?')">Supprimer</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" class="text-center">Aucun fournisseur trouvé.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+    document.getElementById('menu_fournisseurs').classList.add('active');
+</script>
+{% endblock js %}
