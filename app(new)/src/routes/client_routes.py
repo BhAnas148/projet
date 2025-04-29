@@ -7,7 +7,7 @@ client_routes = Blueprint('client', __name__, url_prefix='/clients')
 
 @client_routes.route('/')
 def index():
-    clients = UserController.read_all_by_role('client')
+    clients = UserController.read_all()
     return render_template('clients/index.html', clients=clients)
 
 

@@ -44,14 +44,27 @@ Gestion des Fournisseurs
             <tbody>
                 {% for fournisseur in fournisseurs %}
                 <tr>
-                    <td>{{ fournisseur.nom }}</td> 
+                    <td>{{ fournisseur.nom }}</td>
                     <td>{{ fournisseur.email }}</td>
                     <td>{{ fournisseur.telephone }}</td>
                     <td>{{ fournisseur.ville }}</td>
                     <td>
-                        <a href="{{ url_for('fournisseur.details', fournisseur_id=fournisseur.id) }}" class="btn btn-info btn-sm">Détails</a>
-                        <a href="{{ url_for('fournisseur.update', fournisseur_id=fournisseur.id) }}" class="btn btn-warning btn-sm">Modifier</a>
-                        <a href="{{ url_for('fournisseur.delete', fournisseur_id=fournisseur.id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr ?')">Supprimer</a>
+                        <!-- Bouton Détails -->
+                        <a href="{{ url_for('fournisseur.read_one', user_id=fournisseur.id) }}" class="btn btn-info btn-sm">
+                            Détails
+                        </a>
+
+                        <!-- Bouton Modifier -->
+                        <a href="{{ url_for('fournisseur.update', user_id=fournisseur.id) }}" class="btn btn-warning btn-sm">
+                            Modifier
+                        </a>
+
+                        <!-- Bouton Supprimer -->
+                        <form action="{{ url_for('fournisseur.delete', user_id=fournisseur.id) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce fournisseur ?')">
+                                Supprimer
+                            </button>
+                        </form>
                     </td>
                 </tr>
                 {% else %}
@@ -67,6 +80,6 @@ Gestion des Fournisseurs
 
 {% block js %}
 <script>
-    document.getElementById('menu_fournisseurs').classList.add('active');
+    document.getElementById('menu_fournisseurs')?.classList.add('active');
 </script>
 {% endblock js %}

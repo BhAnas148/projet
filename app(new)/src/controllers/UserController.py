@@ -55,7 +55,7 @@ class UserController:
 
         user.nom = data.get('nom', user.nom)
         user.prenom = data.get('prenom', user.prenom)
-        user.date_naissance = data.get('date_naissance', user.date_naissance)
+        user.date_de_naissance = data.get('date_de_naissance', user.date_de_naissance)
         user.ville = data.get('ville', user.ville)
         user.adresse = data.get('adresse', user.adresse)
         user.role = data.get('role', user.role)

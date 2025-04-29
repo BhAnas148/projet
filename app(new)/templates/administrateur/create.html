@@ -1,0 +1,57 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+Créer administrateur
+{% endblock title %}
+
+{% block breadcrumb %}
+<div class="row">
+    <div class="col-sm-6">
+        <h3 class="mb-0">Créer un administrateur</h3>
+    </div>
+    <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-end">
+            <li class="breadcrumb-item"><a href="/">Accueil</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('administrateur.index') }}">administrateur</a></li>
+            <li class="breadcrumb-item active">Créer</li>
+        </ol>
+    </div>
+</div>
+{% endblock breadcrumb %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-header">
+        <h3 class="card-title">Ajouter administrateur</h3>
+    </div>
+
+    <form action="{{ url_for('administrateur.create') }}" method="POST">
+        <div class="card-body">
+            {% if error %}
+            <div class="alert alert-danger">{{ error }}</div>
+            {% endif %}
+            <div class="row">
+                <div class="col-6 offset-3">
+                    {% include 'administrateur/form.html' %}
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col-3 offset-3">
+                    <a href="/administrateur" class="btn w-100 btn-dark">Annuler</a>
+                </div>
+                <div class="col-3">
+                    <button type="submit" class="btn w-100 btn-primary">Ajouter</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+    document.getElementById('menu_administrateur').classList.add('active');
+</script>
+{% endblock js %}

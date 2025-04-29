@@ -1,8 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-
 from src.controllers.UserController import UserController
-
-from src.entities.user import UserRole
 
 fournisseur_routes = Blueprint(
     'fournisseur', __name__, url_prefix='/fournisseurs')
@@ -18,16 +15,15 @@ def index():
 def create():
     if request.method == 'POST':
         data = {
-          
-            'nom' : request.form['nom'],
-            'prenom' : '',
-            'date_de_naissance' : '1900-01-01',
-            'telephone' : request.form['telephone'],
-            'ville' : request.form['ville'],
-            'adresse' : request.form['adresse'],
-            'email' : request.form['email'],
-            'mot_de_passe' : '',
-            'role' : 'fournisseur'
+            'nom': request.form['nom'],
+            'prenom': '',
+            'date_de_naissance': '1990-05-08',
+            'telephone': request.form['telephone'],
+            'ville': request.form['ville'],
+            'adresse': request.form['adresse'],
+            'email': request.form['email'],
+            'mot_de_passe': '',
+            'role': 'fournisseur'
         }
         success, result = UserController.create(data)
         if success:
@@ -40,7 +36,7 @@ def create():
 def read_one(user_id):
     user = UserController.read_one(user_id)
     if user:
-        return render_template('fournisseurs/detail.html', user=user)
+        return render_template('fournisseurs/details.html', user=user)
     return redirect(url_for('fournisseur.index'))
 
 
@@ -53,9 +49,15 @@ def update(user_id):
     if request.method == 'POST':
         data = {
             'nom': request.form['nom'],
-            'prenom': request.form['prenom'],
+            'telephone': request.form['telephone'],
+            'ville': request.form['ville'],
+            'adresse': request.form['adresse'],
             'email': request.form['email'],
-            'mot_de_passe': request.form['mot_de_passe']
+
+            'prenom': '',
+            'date_de_naissance': '1990-05-08',
+            'mot_de_passe': '',
+            'role': 'fournisseur'
         }
         success, result = UserController.update(user_id, data)
         if success:

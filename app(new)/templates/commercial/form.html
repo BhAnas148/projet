@@ -1,0 +1,38 @@
+<div class="row">
+    <div class="col-6">
+        <div class="mb-3">
+            <label for="nom" class="form-label">commercial</label>
+            <input type="text" id="nom" name="nom" class="form-control"
+                value="{{ user.nom if user else '' }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" name="email" class="form-control"
+                value="{{ user.email if user else '' }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="telephone" class="form-label">Téléphone</label>
+            <input type="text" id="telephone" name="telephone" class="form-control"
+                value="{{ user.telephone if user else '' }}">
+        </div>
+
+
+    </div>
+    <div class="col-6">
+        <div class="mb-3">
+            <label for="ville" class="form-label">Ville</label>
+            <input type="text" id="ville" name="ville" class="form-control"
+                value="{{ user.ville if user else '' }}">
+        </div>
+
+        <div class="mb-3">
+            <label for="adresse" class="form-label">Adresse</label>
+            <input type="text" id="adresse" name="adresse" class="form-control"
+                value="{{ user.adresse if user else '' }}">
+        </div>
+
+       
+    </div>
+</div>

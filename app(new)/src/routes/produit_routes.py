@@ -1,7 +1,7 @@
 import os
 
 from flask import Blueprint, render_template, request, redirect, url_for
-# from flask_uploads import UploadSet, configure_uploads, IMAGES
+#from flask_uploads import UploadSet, configure_uploads, IMAGES
 
 from src.controllers.CategorieController import CategorieController
 from src.controllers.SousCategorieController import SousCategorieController
@@ -12,7 +12,7 @@ produit_routes = Blueprint(
 
 # Setup file upload
 # photos = UploadSet("photos", IMAGES)
-# produit_routes.config['UPLOADED_PHOTOS_DEST'] = 'static/uploads/'
+# produit_routes.config['UPLOADED_PHOTOS_DEST'] = 'static/produits/'
 # configure_uploads(produit_routes, photos)
 
 
@@ -43,8 +43,6 @@ def create():
         #     data['image_nom'] = filename
         #     data['is_primary'] = True  # Mark the image as primary
 
-        data['image_nom'] = "default.jpg"
-        data['is_primary'] = True
         success, result = ProduitController.create(data)
         if success:
             return redirect(url_for('produit.index'))
