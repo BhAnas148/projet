@@ -78,3 +78,16 @@ class UserController:
         if user and check_password_hash(user.mot_de_passe, mot_de_passe):
             return True, user
         return False, "Invalid credentials"
+
+    @staticmethod
+    def get_users_by_role(role):
+        """
+        Get all users with a specific role
+        
+        Args:
+            role (str): The role to filter users by
+            
+        Returns:
+            List[User]: A list of User objects with the specified role
+        """
+        return User.query.filter_by(role=role).all()

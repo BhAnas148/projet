@@ -54,7 +54,7 @@ Gestion des Produits
                     <td>{{ produit.categorie.nom }}</td>
                     <td>{{ produit.sous_categorie.nom }}</td>
                     <td class="text-center">
-                        <a href="" class="btn btn-dark btn-sm">Détails</a>
+                        <a href="{{ url_for('produit.details', produit_id=produit.id) }}" class="btn btn-dark btn-sm">Détails</a>
 
                         <a href="{{ url_for('produit.update', produit_id=produit.id) }}"
                             class="btn btn-warning btn-sm">Modifier</a>

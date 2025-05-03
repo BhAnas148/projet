@@ -52,19 +52,42 @@ class ProduitController:
         if not produit:
             return False, "Produit introuvable"
 
+        # Validate category if being updated
         if data.get('categorie_id'):
             if not Categorie.query.get(data['categorie_id']):
                 return False, "Catégorie non valide"
             produit.categorie_id = data['categorie_id']
 
+        # Validate subcategory if being updated
         if data.get('sous_categorie_id'):
             if not SousCategorie.query.get(data['sous_categorie_id']):
                 return False, "Sous-catégorie non valide"
             produit.sous_categorie_id = data['sous_categorie_id']
 
+        # Update basic product info
         produit.designation = data.get('designation', produit.designation)
         produit.description = data.get('description', produit.description)
         produit.prix_vente = data.get('prix_vente', produit.prix_vente)
+
+        # Handle image update if new image was provided
+        if 'image_nom' in data:
+            # Find existing primary image
+            primary_image = Image.query.filter_by(
+                produit_id=produit.id,
+                is_primary=True
+            ).first()
+
+            if primary_image:
+                # Update existing primary image
+                primary_image.nom = data['image_nom']
+            else:
+                # Create new primary image if none exists
+                new_image = Image(
+                    produit_id=produit.id,
+                    nom=data['image_nom'],
+                    is_primary=True
+                )
+                db.session.add(new_image)
 
         db.session.commit()
         return True, produit

@@ -1,0 +1,138 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+Gestion des Produits | Détails Produit
+{% endblock title %}
+
+{% block breadcrumb %}
+<div class="row">
+    <div class="col-sm-6">
+        <h3 class="mb-0">Gestion des Produits</h3>
+    </div>
+    <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-end">
+            <li class="breadcrumb-item"><a href="/">Accueil</a></li>
+            <li class="breadcrumb-item"><a href="/produits">Produits</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Détails</li>
+        </ol>
+    </div>
+</div>
+{% endblock breadcrumb %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-6">
+                        <h3 class="card-title">Détails Produit</h3>
+                    </div>
+                    <div class="col-6 text-end">
+                        <a href="/produits" class="btn btn-dark">Retour</a>
+
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <strong>Désignation: </strong><span>{{ produit.designation }}</span>
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Catégorie: </strong><span>{{ categorie.nom }}</span>
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Sous-catégorie: </strong><span>{{ sous_categorie.nom if sous_categorie else
+                                    'N/A' }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-6">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <strong>Prix de vente: </strong><span>{{ produit.prix_vente }} DT</span>
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Description: </strong>
+                                <br>
+                                <span>{{ produit.description or 'Aucune description' }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-6">
+                        <h4>Images du Produit</h4>
+                    </div>
+                    <div class="col-6 text-end">
+                        <a href="/produits/{{ produit.id }}/images/create" class="btn btn-primary">
+                            Ajouter une image
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    {% if images %}
+                    {% for image in images %}
+                    <div class="col-md-4 col-sm-6 mb-4">
+                        <div class="card h-100">
+
+                            <img src="/static/produits/{{ image.nom }}" class="card-img-top img-fluid"
+                                alt="Image du produit {{ produit.designation }}"
+                                style="height: 200px; object-fit: cover;">
+
+                            <div class="card-footer bg-transparent">
+                                <div class="d-flex justify-content-between">
+                                    {% if not image.is_primary %}
+                                    <a href="/produits/{{ produit.id }}/images/set-primary/{{ image.id }}"
+                                        class="btn btn-sm btn-info" title="Définir comme image principale">
+                                        <i class="bi bi-star"></i>
+                                    </a>
+                                    {% else %}
+                                    <span class="btn btn-sm btn-success disabled">
+                                        <i class="bi bi-check"></i> Principale
+                                    </span>
+                                    {% endif %}
+
+                                    <a href="/produits/{{ produit.id }}/images/delete/{{ image.id }}"
+                                        onclick="return confirm('Supprimer cette image?');"
+                                        class="btn btn-sm btn-danger">
+                                        <i class="bi bi-trash"></i></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="col-12">
+                        <div class="alert alert-info text-center">
+                            Aucune image disponible pour ce produit
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+    document.getElementById('menu_produits').classList.add('active');
+</script>
+{% endblock js %}
