@@ -1,0 +1,81 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+Gestion des Achats
+{% endblock title %}
+
+{% block breadcrumb %}
+<div class="row">
+    <div class="col-sm-6">
+        <h3 class="mb-0">Gestion des Achats</h3>
+    </div>
+    <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-end">
+            <li class="breadcrumb-item"><a href="/">Accueil</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Achats</li>
+        </ol>
+    </div>
+</div>
+{% endblock breadcrumb %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-6">
+                <h3 class="card-title">Liste des Achats</h3>
+            </div>
+            <div class="col-6">
+                <a href="{{ url_for('achat.create') }}" class="btn btn-primary float-end">Nouvel Achat</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Produit</th>
+                    <th>Fournisseur</th>
+                    <th>Prix Unitaire</th>
+                    <th>Quantité</th>
+                    <th>Prix Total</th>
+                    <th>Date</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for achat in achats %}
+                <tr class="align-middle">
+                    <td>{{ achat.id }}</td>
+                    <td>{{ achat.produit.nom }}</td>
+                    <td>{{ achat.fournisseur.nom }}</td>
+                    <td>{{ achat.prix_achat_unitaire }}</td>
+                    <td>{{ achat.quantite }}</td>
+                    <td>{{ achat.prix_achat_total }}</td>
+                    <td>{{ achat.date_creation.strftime('%d/%m/%Y %H:%M') }}</td>
+                    <td class="text-center">
+                        <a href="{{ url_for('achat.read_one', achat_id=achat.id) }}" class="btn btn-dark btn-sm">Détails</a>
+                        <a href="{{ url_for('achat.update', achat_id=achat.id) }}" class="btn btn-warning btn-sm">Modifier</a>
+                        <form action="{{ url_for('achat.delete', achat_id=achat.id) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Supprimer cet achat ?')">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="8" class="text-center">Aucun achat trouvé.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+    document.getElementById('menu_achats').classList.add('active');
+</script>
+{% endblock js %}

@@ -1,0 +1,152 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+Gestion des Achats | Détails Achat
+{% endblock title %}
+
+{% block breadcrumb %}
+<div class="row">
+    <div class="col-sm-6">
+        <h3 class="mb-0">Gestion des Achats</h3>
+    </div>
+    <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-end">
+            <li class="breadcrumb-item"><a href="/">Accueil</a></li>
+            <li class="breadcrumb-item"><a href="/achats">Achats</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Détails</li>
+        </ol>
+    </div>
+</div>
+{% endblock breadcrumb %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-6">
+                        <h3 class="card-title">Détails Achat</h3>
+                    </div>
+                    <div class="col-6 text-end">
+                        <a href="/achats" class="btn btn-dark">Retour</a>
+                        <a href="{{ url_for('achat.update', achat_id=achat.id) }}" class="btn btn-warning ms-2">Modifier</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <strong>ID: </strong><span>{{ achat.id }}</span>
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Produit: </strong>
+                                <span>
+                                    {{ produit.designation if produit else 'Produit ID: ' + achat.produit_id|string }}
+                                </span>
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Fournisseur: </strong>
+                                <span>
+                                    {{ fournisseur.nom if fournisseur else 'Fournisseur ID: ' + achat.fournisseur_id|string }}
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <strong>Prix unitaire: </strong><span>{{ achat.prix_achat_unitaire }} DT</span>
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Quantité: </strong><span>{{ achat.quantite }}</span>
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Prix total: </strong><span>{{ achat.prix_achat_total }} DT</span>
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Date: </strong>
+                                <span>{{ achat.date_creation.strftime('%d/%m/%Y %H:%M') }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <form action="{{ url_for('achat.delete', achat_id=achat.id) }}" method="POST" class="d-inline">
+                    <button type="submit" class="btn btn-danger" 
+                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet achat ?')">
+                        Supprimer
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Section pour les informations supplémentaires si nécessaire -->
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4>Informations sur le produit</h4>
+            </div>
+            <div class="card-body">
+                {% if produit %}
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <strong>Description: </strong>
+                        <span>{{ produit.description or 'Aucune description' }}</span>
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Prix de vente: </strong>
+                        <span>{{ produit.prix_vente }} DT</span>
+                    </li>
+                </ul>
+                {% else %}
+                <div class="alert alert-info">
+                    Aucune information supplémentaire disponible sur le produit
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4>Informations sur le fournisseur</h4>
+            </div>
+            <div class="card-body">
+                {% if fournisseur %}
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <strong>Contact: </strong>
+                        <span>{{ fournisseur.telephone or 'Non renseigné' }}</span>
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Email: </strong>
+                        <span>{{ fournisseur.email or 'Non renseigné' }}</span>
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Adresse: </strong>
+                        <span>{{ fournisseur.adresse or 'Non renseignée' }}</span>
+                    </li>
+                </ul>
+                {% else %}
+                <div class="alert alert-info">
+                    Aucune information supplémentaire disponible sur le fournisseur
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+    document.getElementById('menu_achats').classList.add('active');
+</script>
+{% endblock js %}

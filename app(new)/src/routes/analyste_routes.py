@@ -8,8 +8,8 @@ analyste_routes = Blueprint(
 
 @analyste_routes.route('/')
 def index():
-    analystes = UserController.read_all()
-    return render_template('analyste/index.html', analystes=analystes)
+    analyste = UserController.get_users_by_role('analyste')
+    return render_template('analyste/index.html', analyste=analyste)
 
 
 @analyste_routes.route('/create', methods=['GET', 'POST'])

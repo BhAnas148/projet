@@ -1,0 +1,52 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+Détails Client
+{% endblock title %}
+
+{% block breadcrumb %}
+<div class="row">
+    <div class="col-sm-6">
+        <h3 class="mb-0">Détails Client</h3>
+    </div>
+    <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-end">
+            <li class="breadcrumb-item"><a href="/">Accueil</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('client.index') }}">Clients</a></li>
+            <li class="breadcrumb-item active">Détails</li>
+        </ol>
+    </div>
+</div>
+{% endblock breadcrumb %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-header">
+        <h3 class="card-title">Détails Client</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-6 offset-3">
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Nom:</strong> {{ user.nom }}</li>
+                    <li class="list-group-item"><strong>Prénom:</strong> {{ user.prenom }}</li>
+                    <li class="list-group-item"><strong>Email:</strong> {{ user.email }}</li>
+                    <li class="list-group-item"><strong>Téléphone:</strong> {{ user.telephone }}</li>
+                    <li class="list-group-item"><strong>Ville:</strong> {{ user.ville }}</li>
+                    <li class="list-group-item"><strong>Adresse:</strong> {{ user.adresse }}</li>
+                    <li class="list-group-item"><strong>Date de Naissance:</strong> {{ user.date_de_naissance }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer text-end">
+        <a href="{{ url_for('client.index') }}" class="btn btn-dark">Retour</a>
+    </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+    document.getElementById('menu_clients').classList.add('active');
+</script>
+{% endblock js %}

@@ -1,19 +1,19 @@
 {% extends "layouts/base.html" %}
 
 {% block title %}
-Gestion des Clients | Ajouter un Client
+Créer Client
 {% endblock title %}
 
 {% block breadcrumb %}
 <div class="row">
     <div class="col-sm-6">
-        <h3 class="mb-0">Gestion des Clients</h3>
+        <h3 class="mb-0">Créer un Client</h3>
     </div>
     <div class="col-sm-6">
         <ol class="breadcrumb float-sm-end">
             <li class="breadcrumb-item"><a href="/">Accueil</a></li>
-            <li class="breadcrumb-item"><a href="/clients">Clients</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Ajouter</li>
+            <li class="breadcrumb-item"><a href="{{ url_for('client.index') }}">Clients</a></li>
+            <li class="breadcrumb-item active">Créer</li>
         </ol>
     </div>
 </div>
@@ -22,14 +22,7 @@ Gestion des Clients | Ajouter un Client
 {% block content %}
 <div class="card mb-4">
     <div class="card-header">
-        <div class="row">
-            <div class="col-6">
-                <h3 class="card-title">Ajouter Client</h3>
-            </div>
-            <div class="col-6">
-                <a href="/clients" class="btn btn-dark float-end">Retour</a>
-            </div>
-        </div>
+        <h3 class="card-title">Ajouter Client</h3>
     </div>
 
     <form action="{{ url_for('client.create') }}" method="POST">
@@ -38,45 +31,11 @@ Gestion des Clients | Ajouter un Client
             <div class="alert alert-danger">{{ error }}</div>
             {% endif %}
             <div class="row">
-                <div class="col-6">
-                    <div class="mb-3">
-                        <label for="nom" class="form-label">Nom</label>
-                        <input type="text" class="form-control" id="nom" name="nom" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="prenom" class="form-label">Prénom</label>
-                        <input type="text" class="form-control" id="prenom" name="prenom" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="mot_de_passe" class="form-label">Mot de passe</label>
-                        <input type="password" class="form-control" id="mot_de_passe" name="mot_de_passe" required>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="mb-3">
-                        <label for="date_de_naissance" class="form-label">Date de naissance</label>
-                        <input type="date" class="form-control" id="date_de_naissance" name="date_de_naissance" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="telephone" class="form-label">Téléphone</label>
-                        <input type="text" class="form-control" id="telephone" name="telephone" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="ville" class="form-label">Ville</label>
-                        <input type="text" class="form-control" id="ville" name="ville" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="adresse" class="form-label">Adresse</label>
-                        <textarea class="form-control" id="adresse" name="adresse" required></textarea>
-                    </div>
+                <div class="col-6 offset-3">
+                    {% include 'clients/form.html' %}
                 </div>
             </div>
         </div>
-
         <div class="card-footer">
             <div class="row">
                 <div class="col-3 offset-3">

@@ -12,7 +12,7 @@ Gestion des Clients
     <div class="col-sm-6">
         <ol class="breadcrumb float-sm-end">
             <li class="breadcrumb-item"><a href="/">Accueil</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Clients</li>
+            <li class="breadcrumb-item active">Clients</li>
         </ol>
     </div>
 </div>
@@ -30,40 +30,41 @@ Gestion des Clients
             </div>
         </div>
     </div>
-
-    <div class="card-body">
+    <div class="card-body table-responsive">
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>#</th>
                     <th>Nom</th>
                     <th>Prénom</th>
                     <th>Email</th>
                     <th>Téléphone</th>
-                    <th>Ville</th>
-                    <th class="text-center" style="width: 30%">Actions</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 {% for client in clients %}
-                <tr class="align-middle">
-                    <td>{{ client.id }}</td>
+                <tr>
                     <td>{{ client.nom }}</td>
                     <td>{{ client.prenom }}</td>
                     <td>{{ client.email }}</td>
                     <td>{{ client.telephone }}</td>
-                    <td>{{ client.ville }}</td>
-                    <td class="text-center">
-                        <a href="{{ url_for('client.read_one', user_id=client.id) }}" class="btn btn-dark btn-sm">Détails</a>
-                        <a href="{{ url_for('client.update', user_id=client.id) }}" class="btn btn-warning btn-sm">Modifier</a>
+                    <td>
+                        <a href="{{ url_for('client.read_one', user_id=client.id) }}" class="btn btn-info btn-sm">
+                            Détails
+                        </a>
+                        <a href="{{ url_for('client.update', user_id=client.id) }}" class="btn btn-warning btn-sm">
+                            Modifier
+                        </a>
                         <form action="{{ url_for('client.delete', user_id=client.id) }}" method="POST" style="display:inline;">
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Supprimer ce client ?')">Supprimer</button>
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce client ?')">
+                                Supprimer
+                            </button>
                         </form>
                     </td>
                 </tr>
                 {% else %}
                 <tr>
-                    <td colspan="7" class="text-center">Aucun client trouvé.</td>
+                    <td colspan="5" class="text-center">Aucun client trouvé.</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -74,6 +75,6 @@ Gestion des Clients
 
 {% block js %}
 <script>
-    document.getElementById('menu_clients').classList.add('active');
+    document.getElementById('menu_clients')?.classList.add('active');
 </script>
 {% endblock js %}

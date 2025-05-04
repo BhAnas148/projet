@@ -3,7 +3,7 @@ from datetime import datetime
 from src.entities import db
 from src.entities.achat import Achat
 from src.entities.produit import Produit
-from src.entities.user import User
+from src.entities.user import User, UserRole
 
 
 class AchatController:
@@ -15,11 +15,14 @@ class AchatController:
             return False, "Produit non valide"
 
         # Validate fournisseur
+        print(data['fournisseur_id'])
         fournisseur = User.query.get(data['fournisseur_id'])
-        if not fournisseur or fournisseur.role != "fournisseur":
+        print(not fournisseur)
+        print(fournisseur.role)
+        if not fournisseur or fournisseur.role != UserRole.fournisseur:
             return False, "Fournisseur non valide"
 
-        prix_total = data['prix_achat_unitaire'] * data['quantite']
+        prix_total = int(data['prix_achat_unitaire']) * int(data['quantite'])
 
         achat = Achat(
             produit_id=data['produit_id'],

@@ -7,7 +7,7 @@ fournisseur_routes = Blueprint(
 
 @fournisseur_routes.route('/')
 def index():
-    fournisseurs = UserController.read_all()
+    fournisseurs = UserController.get_users_by_role('fournisseur')
     return render_template('fournisseurs/index.html', fournisseurs=fournisseurs)
 
 

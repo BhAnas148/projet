@@ -1,13 +1,13 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-
 from src.controllers.UserController import UserController
 
-client_routes = Blueprint('client', __name__, url_prefix='/clients')
+client_routes = Blueprint(
+    'client', __name__, url_prefix='/clients')
 
 
 @client_routes.route('/')
 def index():
-    clients = UserController.read_all()
+    clients = UserController.get_users_by_role('client')
     return render_template('clients/index.html', clients=clients)
 
 
@@ -16,9 +16,13 @@ def create():
     if request.method == 'POST':
         data = {
             'nom': request.form['nom'],
-            'prenom': request.form['prenom'],
+            'prenom': request.form.get('prenom', ''),
+            'date_de_naissance': request.form.get('date_de_naissance', '1990-05-08'),
+            'telephone': request.form['telephone'],
+            'ville': request.form['ville'],
+            'adresse': request.form['adresse'],
             'email': request.form['email'],
-            'mot_de_passe': request.form['mot_de_passe'],
+            'mot_de_passe': request.form.get('mot_de_passe', ''),
             'role': 'client'
         }
         success, result = UserController.create(data)
@@ -32,7 +36,7 @@ def create():
 def read_one(user_id):
     user = UserController.read_one(user_id)
     if user:
-        return render_template('clients/detail.html', user=user)
+        return render_template('clients/details.html', user=user)
     return redirect(url_for('client.index'))
 
 
@@ -45,9 +49,14 @@ def update(user_id):
     if request.method == 'POST':
         data = {
             'nom': request.form['nom'],
-            'prenom': request.form['prenom'],
+            'prenom': request.form.get('prenom', ''),
+            'date_de_naissance': request.form.get('date_de_naissance', '1990-05-08'),
+            'telephone': request.form['telephone'],
+            'ville': request.form['ville'],
+            'adresse': request.form['adresse'],
             'email': request.form['email'],
-            'mot_de_passe': request.form['mot_de_passe']
+            'mot_de_passe': request.form.get('mot_de_passe', ''),
+            'role': 'client'
         }
         success, result = UserController.update(user_id, data)
         if success:

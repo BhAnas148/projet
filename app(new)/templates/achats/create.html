@@ -1,0 +1,102 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+Gestion des Achats | Ajouter un Achat
+{% endblock title %}
+
+{% block breadcrumb %}
+<div class="row">
+    <div class="col-sm-6">
+        <h3 class="mb-0">Gestion des Achats</h3>
+    </div>
+    <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-end">
+            <li class="breadcrumb-item"><a href="/">Accueil</a></li>
+            <li class="breadcrumb-item"><a href="/achats">Achats</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Ajouter</li>
+        </ol>
+    </div>
+</div>
+{% endblock breadcrumb %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-6">
+                <h3 class="card-title">Ajouter un Achat</h3>
+            </div>
+            <div class="col-6">
+                <a href="/achats" class="btn btn-dark float-end">Retour</a>
+            </div>
+        </div>
+    </div>
+
+    <form action="{{ url_for('achat.create') }}" method="POST">
+        <div class="card-body">
+            {% if error %}
+            <div class="alert alert-danger">{{ error }}</div>
+            {% endif %}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="produit_id" class="form-label">Produit</label>
+                        <select class="form-control" id="produit_id" name="produit_id" required>
+                            {% for produit in produits %}
+                            <option value="{{ produit.id }}">{{ produit.designation }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="fournisseur_id" class="form-label">Fournisseur</label>
+                        <select class="form-control" id="fournisseur_id" name="fournisseur_id" required>
+                            {% for fournisseur in fournisseurs %}
+                            <option value="{{ fournisseur.id }}">{{ fournisseur.nom }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="prix_achat_unitaire" class="form-label">Prix unitaire</label>
+                        <input type="number" step="0.01" class="form-control" id="prix_achat_unitaire" name="prix_achat_unitaire" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="quantite" class="form-label">Quantité</label>
+                        <input type="number" class="form-control" id="quantite" name="quantite" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="date_creation" class="form-label">Date</label>
+                        <input type="datetime-local" class="form-control" id="date_creation" name="date_creation">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <div class="row">
+                <div class="col-md-3 offset-md-3">
+                    <a href="/achats" class="btn w-100 btn-dark">Annuler</a>
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn w-100 btn-primary">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+    document.getElementById('menu_achats').classList.add('active');
+    
+    // Définir la date actuelle comme valeur par défaut
+    document.addEventListener('DOMContentLoaded', function() {
+        const now = new Date();
+        // Format compatible avec datetime-local (YYYY-MM-DDTHH:MM)
+        const formattedDate = now.toISOString().slice(0, 16);
+        document.getElementById('date_creation').value = formattedDate;
+    });
+</script>
+{% endblock js %}

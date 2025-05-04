@@ -1,6 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 
 from src.controllers.AchatController import AchatController
+from src.controllers.UserController import UserController
+from src.controllers.ProduitController import ProduitController
 
 achat_routes = Blueprint('achat', __name__, url_prefix='/achats')
 
@@ -24,9 +26,25 @@ def create():
         success, result = AchatController.create(data)
         if success:
             return redirect(url_for('achat.index'))
-        return render_template('achats/create.html', error=result)
+        else:
+            # En cas d'erreur, on recharge les listes pour le formulaire
+            fournisseurs = UserController.get_users_by_role('fournisseur')
+            produits = ProduitController.read_all()
+            return render_template(
+                'achats/create.html',
+                error=result,
+                fournisseurs=fournisseurs,
+                produits=produits
+            )
 
-    return render_template('achats/create.html')
+    # GET request
+    fournisseurs = UserController.get_users_by_role('fournisseur')
+    produits = ProduitController.read_all()
+    return render_template(
+        'achats/create.html',
+        fournisseurs=fournisseurs,
+        produits=produits
+    )
 
 
 @achat_routes.route('/<int:achat_id>')
@@ -42,23 +60,39 @@ def update(achat_id):
     achat = AchatController.read_one(achat_id)
     if not achat:
         return redirect(url_for('achat.index'))
-    
+
+    # Récupération des listes pour le formulaire
+    fournisseurs = UserController.get_users_by_role('fournisseur')
+    produits = ProduitController.read_all()
+
     if request.method == 'POST':
         data = {
+            'produit_id': request.form['produit_id'],
+            'fournisseur_id': request.form['fournisseur_id'],
             'prix_achat_unitaire': request.form['prix_achat_unitaire'],
             'quantite': request.form['quantite']
         }
         success, result = AchatController.update(achat_id, data)
         if success:
             return redirect(url_for('achat.read_one', achat_id=achat_id))
-        return render_template('achats/update.html', error=result, achat=achat)
+        return render_template(
+            'achats/update.html',
+            error=result,
+            achat=achat,
+            fournisseurs=fournisseurs,
+            produits=produits
+        )
 
-    return render_template('achats/update.html', achat=achat)
+    return render_template(
+        'achats/update.html',
+        achat=achat,
+        fournisseurs=fournisseurs,
+        produits=produits
+    )
 
 
 @achat_routes.route('/delete/<int:achat_id>', methods=['POST'])
 def delete(achat_id):
     success, result = AchatController.delete(achat_id)
-    if success:
-        return redirect(url_for('achat.index'))
-    return redirect(url_for('achat.index'))  # Handle error if necessary
+    # Tu peux aussi gérer les erreurs ici avec flash ou message
+    return redirect(url_for('achat.index'))
