@@ -25,20 +25,32 @@ Détails commercial
         <h3 class="card-title">Détails commercial</h3>
     </div>
     <div class="card-body">
-        <div class="row">
-            <div class="col-6 offset-3">
-                <ul class="list-group">
-                    <li class="list-group-item"><strong>Nom:</strong> {{ user.nom }}</li>
-                    <li class="list-group-item"><strong>Prénom:</strong> {{ user.prenom }}</li>
-                    <li class="list-group-item"><strong>Email:</strong> {{ user.email }}</li>
-                    <li class="list-group-item"><strong>Téléphone:</strong> {{ user.telephone }}</li>
-                    <li class="list-group-item"><strong>Ville:</strong> {{ user.ville }}</li>
-                    <li class="list-group-item"><strong>Adresse:</strong> {{ user.adresse }}</li>
-                    <li class="list-group-item"><strong>Date de Naissance:</strong> {{ user.date_de_naissance }}
-                    </li>
-                </ul>
-            </div>
-        </div>
+         <div class="row">
+                    <div class="col-6">
+                        <ul class="list-group" >
+                            <li class="list-group-item" style="border-top: none; border-left: none; border-right: none;"><strong>Nom:</strong> {{ user.nom }}</li>
+                            <li class="list-group-item" style="border-top: none; border-left: none; border-right: none;"><strong>Date de Naissance:</strong> {{ user.date_de_naissance }}
+                            </li>
+                             <li class="list-group-item" style="border-top: none; border-left: none; border-right: none;"><strong>Adresse:</strong> {{ user.adresse }}</li>
+
+
+                            <li class="list-group-item" style="border-top: none; border-left: none; border-right: none;"><strong>Email:</strong> {{ user.email }}</li>
+
+                         
+
+                        </ul>
+                    </div>
+                    <div class="col-6">
+                        <ul class="list-group">
+
+                            <li class="list-group-item" style="border-top: none; border-left: none; border-right: none;"><strong>Prénom:</strong> {{ user.prenom }}</li>
+                          
+                            <li class="list-group-item" style="border-top: none; border-left: none; border-right: none;"><strong>Téléphone:</strong> {{ user.telephone }}</li>
+                            <li class="list-group-item" style="border-top: none; border-left: none; border-right: none;"><strong>Ville:</strong> {{ user.ville }}</li>
+
+                        </ul>
+                    </div>
+                </div>
     </div>
     <div class="card-footer text-end">
         <a href="{{ url_for('commercial.index') }}" class="btn btn-dark">Retour</a>

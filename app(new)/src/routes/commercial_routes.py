@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from src.controllers.UserController import UserController
+from src.entities.user import UserRole
 
 commercial_routes = Blueprint(
     'commercial', __name__, url_prefix='/commercial'
@@ -14,29 +15,33 @@ def index():
 
 @commercial_routes.route('/create', methods=['GET', 'POST'])
 def create():
+    show_password = True
     if request.method == 'POST':
         data = {
             'nom': request.form['nom'],
-            'prenom': request.form.get('prenom', ''),
-            'date_de_naissance': request.form.get('date_de_naissance', '1990-01-01'),
+            'prenom': request.form['prenom'],
+            'date_de_naissance': request.form.get('date_de_naissance'),
             'telephone': request.form['telephone'],
             'ville': request.form['ville'],
             'adresse': request.form['adresse'],
             'email': request.form['email'],
-            'mot_de_passe': '',
+            'mot_de_passe': request.form['mot_de_passe'],
             'role': 'commercial'
         }
         success, result = UserController.create(data)
         if success:
             return redirect(url_for('commercial.index'))
-        return render_template('commercial/create.html', error=result)
-    return render_template('commercial/create.html')
+        
+        return render_template('commercial/create.html', error=result, show_password=show_password)
+    
+    return render_template('commercial/create.html', show_password=show_password)
 
 
 @commercial_routes.route('/<int:user_id>')
 def read_one(user_id):
     user = UserController.read_one(user_id)
-    if user and user['role'] == 'commercial':
+    
+    if user and user.role == UserRole.commercial:
         return render_template('commercial/details.html', user=user)
     return redirect(url_for('commercial.index'))
 
@@ -44,19 +49,18 @@ def read_one(user_id):
 @commercial_routes.route('/update/<int:user_id>', methods=['GET', 'POST'])
 def update(user_id):
     user = UserController.read_one(user_id)
-    if not user or user['role'] != 'commercial':
+    if not user or user.role != UserRole.commercial:
         return redirect(url_for('commercial.index'))
 
     if request.method == 'POST':
         data = {
-            'nom': request.form['nom'],
-            'prenom': request.form.get('prenom', ''),
-            'date_de_naissance': request.form.get('date_de_naissance', '1990-01-01'),
+             'nom': request.form['nom'],
+            'prenom': request.form['prenom'],
+            'date_de_naissance': request.form.get('date_de_naissance'),
             'telephone': request.form['telephone'],
             'ville': request.form['ville'],
             'adresse': request.form['adresse'],
             'email': request.form['email'],
-            'mot_de_passe': '',
             'role': 'commercial'
         }
         success, result = UserController.update(user_id, data)

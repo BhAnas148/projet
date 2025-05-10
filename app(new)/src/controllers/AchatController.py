@@ -9,16 +9,29 @@ from src.entities.user import User, UserRole
 class AchatController:
 
     @staticmethod
+    def get_achats_by_fournisseur(fournisseur_id):
+        """
+        Retrieve all purchases made from a specific supplier
+        :param fournisseur_id: ID of the supplier
+        :return: List of Achat objects filtered by supplier ID
+        """
+        # First validate the user is actually a supplier
+        fournisseur = User.query.get(fournisseur_id)
+        if not fournisseur or fournisseur.role != UserRole.fournisseur:
+            return []
+            
+        return Achat.query.filter_by(fournisseur_id=fournisseur_id).all()
+
+    @staticmethod
     def create(data):
         # Validate produit
         if not Produit.query.get(data['produit_id']):
             return False, "Produit non valide"
 
         # Validate fournisseur
-        print(data['fournisseur_id'])
+        
         fournisseur = User.query.get(data['fournisseur_id'])
-        print(not fournisseur)
-        print(fournisseur.role)
+        
         if not fournisseur or fournisseur.role != UserRole.fournisseur:
             return False, "Fournisseur non valide"
 

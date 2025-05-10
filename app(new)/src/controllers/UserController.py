@@ -1,4 +1,4 @@
-from werkzeug.security import generate_password_hash, check_password_hash
+from passlib.hash import pbkdf2_sha256 as sha256
 
 from src.entities import db
 from src.entities.user import User
@@ -22,7 +22,7 @@ class UserController:
             ville=data['ville'],
             adresse=data['adresse'],
             email=data['email'],
-            mot_de_passe=generate_password_hash(data['mot_de_passe']),
+            mot_de_passe=sha256.hash(data['mot_de_passe']),
             role=data['role']
         )
         db.session.add(user)
@@ -75,7 +75,7 @@ class UserController:
     @staticmethod
     def login(email, mot_de_passe):
         user = User.query.filter_by(email=email).first()
-        if user and check_password_hash(user.mot_de_passe, mot_de_passe):
+        if user and sha256.verify(mot_de_passe, user.mot_de_passe):
             return True, user
         return False, "Invalid credentials"
 
@@ -91,3 +91,4 @@ class UserController:
             List[User]: A list of User objects with the specified role
         """
         return User.query.filter_by(role=role).all()
+    

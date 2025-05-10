@@ -1,5 +1,6 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from src.controllers.UserController import UserController
+from src.controllers.AchatController import AchatController
 
 fournisseur_routes = Blueprint(
     'fournisseur', __name__, url_prefix='/fournisseurs')
@@ -69,6 +70,12 @@ def update(user_id):
 
 @fournisseur_routes.route('/delete/<int:user_id>', methods=['POST'])
 def delete(user_id):
+    # check if fournisseur has any achats
+    achats = AchatController.get_achats_by_fournisseur(user_id)
+    if achats:
+        flash('Cannot delete fournisseur with existing achats', 'danger')
+        return redirect(url_for('fournisseur.index'))
+
     success, result = UserController.delete(user_id)
     if success:
         return redirect(url_for('fournisseur.index'))
