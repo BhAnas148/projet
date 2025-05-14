@@ -1,18 +1,18 @@
 {% extends "layouts/base.html" %}
 
 {% block title %}
-Créer Fournisseur
+Créer client
 {% endblock title %}
 
 {% block breadcrumb %}
 <div class="row">
     <div class="col-sm-6">
-        <h3 class="mb-0">Créer un Fournisseur</h3>
+        <h3 class="mb-0">Créer un client</h3>
     </div>
     <div class="col-sm-6">
         <ol class="breadcrumb float-sm-end">
             <li class="breadcrumb-item"><a href="/">Accueil</a></li>
-            <li class="breadcrumb-item"><a href="{{ url_for('fournisseur.index') }}">Fournisseurs</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('client.index') }}">client</a></li>
             <li class="breadcrumb-item active">Créer</li>
         </ol>
     </div>
@@ -22,24 +22,24 @@ Créer Fournisseur
 {% block content %}
 <div class="card mb-4">
     <div class="card-header">
-        <h3 class="card-title">Ajouter Fournisseur</h3>
+        <h3 class="card-title">Ajouter client</h3>
     </div>
 
-    <form action="{{ url_for('fournisseur.create') }}" method="POST">
+    <form action="{{ url_for('client.create') }}" method="POST">
         <div class="card-body">
             {% if error %}
             <div class="alert alert-danger">{{ error }}</div>
             {% endif %}
             <div class="row">
                 <div class="col-8 offset-2">
-                    {% include 'commercial/form.html' %}
+                    {% include 'client/form.html' %}
                 </div>
             </div>
         </div>
         <div class="card-footer">
             <div class="row">
                 <div class="col-4 offset-2">
-                    <a href="/fournisseurs" class="btn w-100 btn-dark">Annuler</a>
+                    <a href="/client" class="btn w-100 btn-dark">Annuler</a>
                 </div>
                 <div class="col-4">
                     <button type="submit" class="btn w-100 btn-primary">Ajouter</button>
@@ -52,6 +52,6 @@ Créer Fournisseur
 
 {% block js %}
 <script>
-    document.getElementById('menu_fournisseurs').classList.add('active');
+    document.getElementById('menu_client').classList.add('active');
 </script>
 {% endblock js %}

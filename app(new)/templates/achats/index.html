@@ -49,7 +49,7 @@ Gestion des Achats
                 {% for achat in achats %}
                 <tr class="align-middle">
                     <td>{{ achat.id }}</td>
-                    <td>{{ achat.produit.nom }}</td>
+                    <td>{{ achat.produit.designation }}</td>
                     <td>{{ achat.fournisseur.nom }}</td>
                     <td>{{ achat.prix_achat_unitaire }}</td>
                     <td>{{ achat.quantite }}</td>

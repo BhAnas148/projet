@@ -1,18 +1,18 @@
 {% extends "layouts/base.html" %}
 
 {% block title %}
-Créer Client
+Créer fournisseur
 {% endblock title %}
 
 {% block breadcrumb %}
 <div class="row">
     <div class="col-sm-6">
-        <h3 class="mb-0">Créer un Client</h3>
+        <h3 class="mb-0">Créer un fournisseur</h3>
     </div>
     <div class="col-sm-6">
         <ol class="breadcrumb float-sm-end">
             <li class="breadcrumb-item"><a href="/">Accueil</a></li>
-            <li class="breadcrumb-item"><a href="{{ url_for('client.index') }}">Clients</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('fournisseur.index') }}">fournisseur</a></li>
             <li class="breadcrumb-item active">Créer</li>
         </ol>
     </div>
@@ -22,26 +22,26 @@ Créer Client
 {% block content %}
 <div class="card mb-4">
     <div class="card-header">
-        <h3 class="card-title">Ajouter Client</h3>
+        <h3 class="card-title">Ajouter fournisseur</h3>
     </div>
 
-    <form action="{{ url_for('client.create') }}" method="POST">
+    <form action="{{ url_for('fournisseur.create') }}" method="POST">
         <div class="card-body">
             {% if error %}
             <div class="alert alert-danger">{{ error }}</div>
             {% endif %}
             <div class="row">
-                <div class="col-6 offset-3">
-                    {% include 'clients/form.html' %}
+                <div class="col-8 offset-2">
+                    {% include 'fournisseur/form.html' %}
                 </div>
             </div>
         </div>
         <div class="card-footer">
             <div class="row">
-                <div class="col-3 offset-3">
-                    <a href="/clients" class="btn w-100 btn-dark">Annuler</a>
+                <div class="col-4 offset-2">
+                    <a href="/fournisseur" class="btn w-100 btn-dark">Annuler</a>
                 </div>
-                <div class="col-3">
+                <div class="col-4">
                     <button type="submit" class="btn w-100 btn-primary">Ajouter</button>
                 </div>
             </div>
@@ -52,6 +52,6 @@ Créer Client
 
 {% block js %}
 <script>
-    document.getElementById('menu_clients').classList.add('active');
+    document.getElementById('menu_fournisseur').classList.add('active');
 </script>
 {% endblock js %}

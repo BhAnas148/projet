@@ -9,7 +9,7 @@ commercial_routes = Blueprint(
 
 @commercial_routes.route('/')
 def index():
-    commercials = UserController.read_all()
+    commercials = UserController.get_users_by_role('commercial')
     return render_template('commercial/index.html', commercials=commercials)
 
 

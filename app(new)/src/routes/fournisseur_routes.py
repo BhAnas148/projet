@@ -3,13 +3,13 @@ from src.controllers.UserController import UserController
 from src.controllers.AchatController import AchatController
 
 fournisseur_routes = Blueprint(
-    'fournisseur', __name__, url_prefix='/fournisseurs')
+    'fournisseur', __name__, url_prefix='/fournisseur')
 
 
 @fournisseur_routes.route('/')
 def index():
-    fournisseurs = UserController.get_users_by_role('fournisseur')
-    return render_template('fournisseurs/index.html', fournisseurs=fournisseurs)
+    fournisseur = UserController.get_users_by_role('fournisseur')
+    return render_template('fournisseur/index.html', fournisseur=fournisseur)
 
 
 @fournisseur_routes.route('/create', methods=['GET', 'POST'])
@@ -29,15 +29,15 @@ def create():
         success, result = UserController.create(data)
         if success:
             return redirect(url_for('fournisseur.index'))
-        return render_template('fournisseurs/create.html', error=result)
-    return render_template('fournisseurs/create.html')
+        return render_template('fournisseur/create.html', error=result)
+    return render_template('fournisseur/create.html')
 
 
 @fournisseur_routes.route('/<int:user_id>')
 def read_one(user_id):
     user = UserController.read_one(user_id)
     if user:
-        return render_template('fournisseurs/details.html', user=user)
+        return render_template('fournisseur/details.html', user=user)
     return redirect(url_for('fournisseur.index'))
 
 
@@ -63,9 +63,9 @@ def update(user_id):
         success, result = UserController.update(user_id, data)
         if success:
             return redirect(url_for('fournisseur.read_one', user_id=user_id))
-        return render_template('fournisseurs/update.html', error=result, user=user)
+        return render_template('fournisseur/update.html', error=result, user=user)
 
-    return render_template('fournisseurs/update.html', user=user)
+    return render_template('fournisseur/update.html', user=user)
 
 
 @fournisseur_routes.route('/delete/<int:user_id>', methods=['POST'])

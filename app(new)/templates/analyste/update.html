@@ -38,7 +38,7 @@ Modifier analyste
             <div class="alert alert-danger">{{ error }}</div>
             {% endif %}
             <div class="row">
-                <div class="col-6 offset-3">
+                <div class="col-8 offset-2">
                     <!-- Formulaire pour les champs de l'analyste existant -->
                     {% include 'analyste/form.html' %}
                 </div>
@@ -47,10 +47,10 @@ Modifier analyste
 
         <div class="card-footer">
             <div class="row">
-                <div class="col-3 offset-3">
+                <div class="col-4 offset-2">
                     <a href="{{ url_for('analyste.index') }}" class="btn w-100 btn-dark">Annuler</a>
                 </div>
-                <div class="col-3">
+                <div class="col-4">
                     <button type="submit" class="btn w-100 btn-primary">Mettre à jour</button>
                 </div>
             </div>

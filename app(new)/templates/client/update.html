@@ -1,18 +1,18 @@
 {% extends "layouts/base.html" %}
 
 {% block title %}
-Modifier Fournisseur
+Modifier client
 {% endblock title %}
 
 {% block breadcrumb %}
 <div class="row">
     <div class="col-sm-6">
-        <h3 class="mb-0">Modifier Fournisseur</h3>
+        <h3 class="mb-0">Modifier client</h3>
     </div>
     <div class="col-sm-6">
         <ol class="breadcrumb float-sm-end">
             <li class="breadcrumb-item"><a href="/">Accueil</a></li>
-            <li class="breadcrumb-item"><a href="{{ url_for('fournisseur.index') }}">Fournisseurs</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('client.index') }}">client</a></li>
             <li class="breadcrumb-item active" aria-current="page">Modifier</li>
         </ol>
     </div>
@@ -24,23 +24,23 @@ Modifier Fournisseur
     <div class="card-header">
         <div class="row">
             <div class="col-6">
-                <h3 class="card-title">Modifier Fournisseur</h3>
+                <h3 class="card-title">Modifier client</h3>
             </div>
             <div class="col-6">
-                <a href="{{ url_for('fournisseur.index') }}" class="btn btn-dark float-end">Retour</a>
+                <a href="{{ url_for('client.index') }}" class="btn btn-dark float-end">Retour</a>
             </div>
         </div>
     </div>
 
-    <form action="{{ url_for('fournisseur.update', user_id=user.id) }}" method="POST">
+    <form action="{{ url_for('client.update', user_id=user.id) }}" method="POST">
         <div class="card-body">
             {% if error %}
             <div class="alert alert-danger">{{ error }}</div>
             {% endif %}
             <div class="row">
                 <div class="col-8 offset-2">
-                    <!-- Formulaire pour les champs du fournisseur existant -->
-                    {% include 'commercial/form.html' %}
+                    <!-- Formulaire pour les champs de l'client existant -->
+                    {% include 'client/form.html' %}
                 </div>
             </div>
         </div>
@@ -48,7 +48,7 @@ Modifier Fournisseur
         <div class="card-footer">
             <div class="row">
                 <div class="col-4 offset-2">
-                    <a href="{{ url_for('fournisseur.index') }}" class="btn w-100 btn-dark">Annuler</a>
+                    <a href="{{ url_for('client.index') }}" class="btn w-100 btn-dark">Annuler</a>
                 </div>
                 <div class="col-4">
                     <button type="submit" class="btn w-100 btn-primary">Mettre à jour</button>
@@ -61,6 +61,6 @@ Modifier Fournisseur
 
 {% block js %}
 <script>
-    document.getElementById('menu_fournisseurs').classList.add('active');
+    document.getElementById('menu_client').classList.add('active');
 </script>
 {% endblock js %}

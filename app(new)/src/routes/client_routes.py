@@ -1,69 +1,74 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from src.controllers.UserController import UserController
+from src.entities.user import UserRole
 
 client_routes = Blueprint(
-    'client', __name__, url_prefix='/clients')
+    'client', __name__, url_prefix='/client'
+)
 
 
 @client_routes.route('/')
 def index():
-    clients = UserController.get_users_by_role('client')
-    return render_template('clients/index.html', clients=clients)
+    client = UserController.get_users_by_role('client')
+    return render_template('client/index.html', client=client)
 
 
 @client_routes.route('/create', methods=['GET', 'POST'])
 def create():
+    show_password = True
     if request.method == 'POST':
         data = {
             'nom': request.form['nom'],
-            'prenom': request.form.get('prenom', ''),
-            'date_de_naissance': request.form.get('date_de_naissance', '1990-05-08'),
+            'prenom': request.form['prenom'],
+            'date_de_naissance': request.form.get('date_de_naissance'),
             'telephone': request.form['telephone'],
             'ville': request.form['ville'],
             'adresse': request.form['adresse'],
             'email': request.form['email'],
-            'mot_de_passe': request.form.get('mot_de_passe', ''),
+            'mot_de_passe': request.form['mot_de_passe'],
             'role': 'client'
         }
         success, result = UserController.create(data)
         if success:
             return redirect(url_for('client.index'))
-        return render_template('clients/create.html', error=result)
-    return render_template('clients/create.html')
+        
+        return render_template('client/create.html', error=result, show_password=show_password)
+    
+    return render_template('client/create.html', show_password=show_password)
 
 
 @client_routes.route('/<int:user_id>')
 def read_one(user_id):
     user = UserController.read_one(user_id)
-    if user:
-        return render_template('clients/details.html', user=user)
+    
+    if user and user.role == UserRole.client:
+        return render_template('client/details.html', user=user)
     return redirect(url_for('client.index'))
 
 
 @client_routes.route('/update/<int:user_id>', methods=['GET', 'POST'])
 def update(user_id):
     user = UserController.read_one(user_id)
-    if not user:
+    if not user or user.role != UserRole.client:
         return redirect(url_for('client.index'))
 
     if request.method == 'POST':
         data = {
-            'nom': request.form['nom'],
-            'prenom': request.form.get('prenom', ''),
-            'date_de_naissance': request.form.get('date_de_naissance', '1990-05-08'),
+             'nom': request.form['nom'],
+            'prenom': request.form['prenom'],
+            'date_de_naissance': request.form.get('date_de_naissance'),
             'telephone': request.form['telephone'],
             'ville': request.form['ville'],
             'adresse': request.form['adresse'],
             'email': request.form['email'],
-            'mot_de_passe': request.form.get('mot_de_passe', ''),
             'role': 'client'
         }
         success, result = UserController.update(user_id, data)
         if success:
             return redirect(url_for('client.read_one', user_id=user_id))
-        return render_template('clients/update.html', error=result, user=user)
+        return render_template('client/update.html', error=result, user=user)
 
-    return render_template('clients/update.html', user=user)
+    return render_template('client/update.html', user=user)
 
 
 @client_routes.route('/delete/<int:user_id>', methods=['POST'])

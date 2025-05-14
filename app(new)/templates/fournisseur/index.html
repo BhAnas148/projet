@@ -1,18 +1,18 @@
 {% extends "layouts/base.html" %}
 
 {% block title %}
-Gestion des Fournisseurs
+Gestion des fournisseur
 {% endblock title %}
 
 {% block breadcrumb %}
 <div class="row">
     <div class="col-sm-6">
-        <h3 class="mb-0">Gestion des Fournisseurs</h3>
+        <h3 class="mb-0">Gestion des fournisseur</h3>
     </div>
     <div class="col-sm-6">
         <ol class="breadcrumb float-sm-end">
             <li class="breadcrumb-item"><a href="/">Accueil</a></li>
-            <li class="breadcrumb-item active">Fournisseurs</li>
+            <li class="breadcrumb-item active">fournisseur</li>
         </ol>
     </div>
 </div>
@@ -23,7 +23,7 @@ Gestion des Fournisseurs
     <div class="card-header">
         <div class="row">
             <div class="col-6">
-                <h3 class="card-title">Liste des Fournisseurs</h3>
+                <h3 class="card-title">Liste des fournisseur</h3>
             </div>
             <div class="col-6">
                 <a href="{{ url_for('fournisseur.create') }}" class="btn btn-primary float-end">Ajouter</a>
@@ -34,7 +34,7 @@ Gestion des Fournisseurs
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>Fournisseur</th>
+                    <th>fournisseur</th>
                     <th>Email</th>
                     <th>Téléphone</th>
                     <th>Ville</th>
@@ -42,9 +42,9 @@ Gestion des Fournisseurs
                 </tr>
             </thead>
             <tbody>
-                {% for fournisseur in fournisseurs %}
+                {% for fournisseur in fournisseur %}
                 <tr>
-                    <td>{{ fournisseur.nom }}</td>
+                    <td>{{ fournisseur.nom }} {{ fournisseur.prenom }}</td>
                     <td>{{ fournisseur.email }}</td>
                     <td>{{ fournisseur.telephone }}</td>
                     <td>{{ fournisseur.ville }}</td>
@@ -61,7 +61,7 @@ Gestion des Fournisseurs
 
                         <!-- Bouton Supprimer -->
                         <form action="{{ url_for('fournisseur.delete', user_id=fournisseur.id) }}" method="POST" style="display:inline;">
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce fournisseur ?')">
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet fournisseur ?')">
                                 Supprimer
                             </button>
                         </form>
@@ -80,6 +80,6 @@ Gestion des Fournisseurs
 
 {% block js %}
 <script>
-    document.getElementById('menu_fournisseurs')?.classList.add('active');
+    document.getElementById('menu_fournisseur')?.classList.add('active');
 </script>
 {% endblock js %}
