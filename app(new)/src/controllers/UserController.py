@@ -92,3 +92,9 @@ class UserController:
         """
         return User.query.filter_by(role=role).all()
     
+    @staticmethod
+    def login(email, password):
+        user = User.query.filter_by(email=email).first()
+        if user and sha256.verify(password, user.mot_de_passe):
+            return user
+        return "Invalid credentials"

@@ -7,7 +7,6 @@ class UserRole(enum.Enum):
     client = "client"
     fournisseur = "fournisseur"
     analyste = "analyste"
-    gestionnaire = "gestionnaire"
     commercial = "commercial"
     administrateur = "administrateur"
 

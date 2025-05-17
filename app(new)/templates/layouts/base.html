@@ -252,65 +252,15 @@
             <div class="sidebar-wrapper">
                 <nav class="mt-2">
                     <!--begin::Sidebar Menu-->
-                    <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu"
-                        data-accordion="false">
-
-                        <li class="nav-item">
-                            <a href="/ventes" class="nav-link" id="menu_ventes">
-                                <i class="bi bi-cart-fill"></i></i>
-                                <p>Ventes</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/achats" class="nav-link" id="menu_achats">
-                                <i class="bi bi-cart-fill"></i></i>
-                                <p>Achats</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/client" class="nav-link" id="menu_client">
-                                <i class="nav-icon bi bi-person"></i>
-                                <p>Clients</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/fournisseur" class="nav-link" id="menu_fournisseur">
-                                <i class="bi bi-buildings"></i></i>
-                                <p>Fournisseurs</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/produits" class="nav-link" id="menu_produits">
-                                <i class="bi bi-basket2-fill"></i></i>
-                                <p>Produits</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/categories" class="nav-link" id="menu_categories">
-                                <i class="bi bi-tag-fill"></i></i>
-                                <p>Categories</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/sous-categories" class="nav-link" id="menu_sous_categories">
-                                <i class="bi bi-tags-fill"></i></i>
-                                <p>Sous Categories</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/analyste" class="nav-link" id="menu_sous_analyste">
-                                <i class="bi bi-tags-fill"></i></i>
-                                <p>analyste</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/commercial" class="nav-link" id="menu_commercial">
-                                <i class="bi bi-tags-fill"></i></i>
-                                <p>commercial</p>
-                            </a>
-                      
-
-                    </ul>
+                    {% if 'user_role' in session and session.get('user_role') == 'administrateur' %}
+                    {% include "layouts/_menu_admin.html" %}
+                    {% endif %}
+                     {% if 'user_role' in session and session.get('user_role') == 'commercial' %}
+                    {% include "layouts/_menu_commercial.html" %}
+                    {% endif %}
+                     {% if 'user_role' in session and session.get('user_role') == 'analyste' %}
+                    {% include "layouts/_menu_analyste.html" %}
+                    {% endif %}
                     <!--end::Sidebar Menu-->
                 </nav>
             </div>
