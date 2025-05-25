@@ -1,0 +1,72 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+Gestion des Commandes | Ajouter une Commande
+{% endblock title %}
+
+{% block breadcrumb %}
+<div class="row">
+    <div class="col-sm-6">
+        <h3 class="mb-0">Gestion des Commandes</h3>
+    </div>
+    <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-end">
+            <li class="breadcrumb-item"><a href="/">Accueil</a></li>
+            <li class="breadcrumb-item"><a href="/commandes">Commandes</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Ajouter</li>
+        </ol>
+    </div>
+</div>
+{% endblock breadcrumb %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-6">
+                <h3 class="card-title">Ajouter une Commande</h3>
+            </div>
+            <div class="col-6">
+                <a href="/commandes" class="btn btn-dark float-end">Retour</a>
+            </div>
+        </div>
+    </div>
+
+    <form  method="POST">
+        <div class="card-body">
+            {% if error %}
+            <div class="alert alert-danger">{{ error }}</div>
+            {% endif %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="mb-3">
+                        <label for="client_id" class="form-label">Client</label>
+                        <select class="form-control" id="client_id" name="client_id" required>
+                            {% for client in clients %}
+                            <option value="{{ client.id }}">{{ client.nom }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <div class="row">
+                <div class="col-md-3 offset-md-3">
+                    <a href="/commandes" class="btn w-100 btn-dark">Annuler</a>
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn w-100 btn-primary">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+    document.getElementById('menu_commandes').classList.add('active');
+</script>
+{% endblock js %}

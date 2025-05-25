@@ -1,0 +1,77 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+Gestion des Commandes
+{% endblock title %}
+
+{% block breadcrumb %}
+<div class="row">
+    <div class="col-sm-6">
+        <h3 class="mb-0">Gestion des Commandes</h3>
+    </div>
+    <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-end">
+            <li class="breadcrumb-item"><a href="/">Accueil</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Commandes</li>
+        </ol>
+    </div>
+</div>
+{% endblock breadcrumb %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-6">
+                <h3 class="card-title">Liste des Commandes</h3>
+            </div>
+            <div class="col-6">
+                <a href="{{ url_for('commande.create') }}" class="btn btn-primary float-end">Nouvelle Commande</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Client</th>
+                    <th>Montant Total</th>
+                    <th>Nombre d'Articles</th>
+                    <th>Date</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for commande in commandes %}
+                <tr class="align-middle">
+                    <td>{{ commande.id }}</td>
+                    <td>{{ commande.client.nom if commande.client else 'Client ID: ' + commande.client_id|string }}</td>
+                    <td>{{ commande.montant_total }} DT</td>
+                    <td>{{ commande.nb_article }}</td>
+                    <td>{{ commande.date_creation.strftime('%d/%m/%Y %H:%M') }}</td>
+                    <td class="text-center">
+                        <a href=class="btn btn-dark btn-sm">Détails</a>
+                        <a href=class="btn btn-warning btn-sm">Modifier</a>
+                        <form action=method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Supprimer cette commande ?')">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" class="text-center">Aucune commande trouvée.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+    document.getElementById('menu_commandes').classList.add('active');
+</script>
+{% endblock js %}

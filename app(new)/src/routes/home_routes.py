@@ -6,7 +6,7 @@ home_routes = Blueprint('home', __name__)
 
 
 @home_routes.route('/')
-@is_logged_in
+#@is_logged_in
 def home():
-    return render_template('index.html')
+    return render_template('frontend/index.html')
     

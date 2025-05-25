@@ -1,0 +1,111 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+Gestion des Commandes | Détails Commande
+{% endblock title %}
+
+{% block breadcrumb %}
+<div class="row">
+    <div class="col-sm-6">
+        <h3 class="mb-0">Gestion des Commandes</h3>
+    </div>
+    <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-end">
+            <li class="breadcrumb-item"><a href="/">Accueil</a></li>
+            <li class="breadcrumb-item"><a href="/commandes">Commandes</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Détails</li>
+        </ol>
+    </div>
+</div>
+{% endblock breadcrumb %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-6">
+                        <h3 class="card-title">Détails Commande</h3>
+                    </div>
+                    <div class="col-6 text-end">
+                        <a href="/commandes" class="btn btn-dark">Retour</a>
+                      
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <strong>ID: </strong><span>{{ commande.id }}</span>
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Client: </strong>
+                                <span>{{ commande.client.nom if commande.client else 'Client ID: ' + commande.client_id|string }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <strong>Montant Total: </strong><span>{{ commande.montant_total }} DT</span>
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Nombre d'Articles: </strong><span>{{ commande.nb_article }}</span>
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Date: </strong>
+                                <span>{{ commande.date_creation.strftime('%d/%m/%Y %H:%M') }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Section pour les informations supplémentaires -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4>Informations sur le client</h4>
+            </div>
+            <div class="card-body">
+                {% if commande.client %}
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <strong>Contact: </strong>
+                        <span>{{ commande.client.telephone or 'Non renseigné' }}</span>
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Email: </strong>
+                        <span>{{ commande.client.email or 'Non renseigné' }}</span>
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Adresse: </strong>
+                        <span>{{ commande.client.adresse or 'Non renseignée' }}</span>
+                    </li>
+                </ul>
+                {% else %}
+                <div class="alert alert-info">
+                    Aucune information supplémentaire disponible sur le client
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+    document.getElementById('menu_commandes').classList.add('active');
+</script>
+{% endblock js %}
