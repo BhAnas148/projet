@@ -8,101 +8,90 @@
             <nav class="breadcrumbs">
                 <ol>
                     <li><a href="/">Home</a></li>
-                    <li class="current">Register</li>
+                    <li class="current">Créer un compte</li>
                 </ol>
             </nav>
-            <h1>Register</h1>
+            <h1>Créer un compte</h1>
         </div>
     </div><!-- End Page Title -->
 
-    <!-- Register Section -->
-    <section id="register" class="register section">
+    <!-- Login Section -->
+    <section id="login" class="login section">
         <div class="container" data-aos="fade-up" data-aos-delay="100">
             <div class="row justify-content-center">
-                <div class="col-lg-8 col-md-10" data-aos="zoom-in" data-aos-delay="200">
+                <div class="col-8" data-aos="zoom-in" data-aos-delay="200">
                     <div class="login-form-wrapper">
                         <div class="login-header text-center">
                             <h2>Créer un compte</h2>
                             <p>Veuillez renseigner les informations ci-dessous</p>
                         </div>
 
-                        <form action="{{ url_for('users.register') }}" method="POST">
+                        <form method="post">
                             <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="nom" class="form-label">Nom</label>
-                                    <input type="text" class="form-control" name="nom" id="nom" required minlength="2" placeholder="Votre nom">
+                                <div class="col-6">
+                                    <div class="mb-4">
+                                        <label for="nom" class="form-label">Nom</label>
+                                        <input type="text" class="form-control" name="nom" placeholder="" required>
+                                    </div>
                                 </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="prenom" class="form-label">Prénom</label>
-                                    <input type="text" class="form-control" name="prenom" id="prenom" required minlength="2" placeholder="Votre prénom">
+                                <div class="col-6">
+                                    <div class="mb-4">
+                                        <label for="prenom" class="form-label">Prénom</label>
+                                        <input type="text" class="form-control" name="prenom" placeholder="" required>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-4">
+                                        <label for="telephone" class="form-label">Téléphone</label>
+                                        <input type="text" class="form-control" name="telephone" placeholder="" required>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-4">
+                                        <label for="date_de_naissance" class="form-label">Date de naissance</label>
+                                        <input type="date" class="form-control" name="date_de_naissance" placeholder="" required>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-4">
+                                        <label for="ville" class="form-label">Ville</label>
+                                        <input type="text" class="form-control" name="ville" placeholder="" required>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-4">
+                                        <label for="adresse" class="form-label">Adresse</label>
+                                        <input type="text" class="form-control" name="adresse" placeholder="" required>
+                                    </div>
+                                </div>
+                                 <div class="col-6">
+                                     <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" name="email" placeholder="Enter your email"
+                                    required="" autocomplete="email">
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-4">
+                                        <label for="mot_de_passe" class="form-label">Mot de passe</label>
+                                        <input type="password" class="form-control" name="mot_de_passe" placeholder="" required>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" name="email" id="email" required placeholder="exemple@email.com">
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="date_de_naissance" class="form-label">Date de naissance</label>
-                                    <input type="date" class="form-control" name="date_de_naissance" id="date_de_naissance" required>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="telephone" class="form-label">Téléphone</label>
-                                    <input type="tel" class="form-control" name="telephone" id="telephone" required placeholder="0612345678">
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="ville" class="form-label">Ville</label>
-                                <input type="text" class="form-control" name="ville" id="ville" required placeholder="Votre ville">
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="adresse" class="form-label">Adresse</label>
-                                <textarea class="form-control" name="adresse" id="adresse" required placeholder="Votre adresse complète"></textarea>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Mot de passe</label>
-                                <input type="password" class="form-control" name="password" id="password" required minlength="8" placeholder="Au moins 8 caractères">
-                            </div>
-
-                            <div class="mb-4">
-                                <label for="confirm_password" class="form-label">Confirmer le mot de passe</label>
-                                <input type="password" class="form-control" name="confirm_password" id="confirm_password" required minlength="8" placeholder="Répétez votre mot de passe">
-                            </div>
-
-                            <input type="hidden" name="role" value="user">
-
-                            <div class="form-check mb-3">
-                                <input class="form-check-input" type="checkbox" name="newsletter" id="newsletter">
-                                <label class="form-check-label" for="newsletter">
-                                    S'inscrire à la newsletter pour les offres exclusives
-                                </label>
-                            </div>
-
-                            <div class="form-check mb-4">
-                                <input class="form-check-input" type="checkbox" name="terms" id="terms" required>
-                                <label class="form-check-label" for="terms">
-                                    J'accepte les <a href="#">Conditions d'utilisation</a> et la <a href="#">Politique de confidentialité</a>
-                                </label>
-                            </div>
+                             
 
                             <div class="d-grid gap-2 mb-4">
-                                <button type="submit" class="btn btn-primary">Créer un compte</button>
+                                <button type="submit" class="btn btn-primary">S'inscrire</button>
                             </div>
 
                             <div class="signup-link text-center">
                                 <span>Vous avez déjà un compte ?</span>
-                                <a href="{{ url_for('users.login') }}">Se connecter</a>
+                                <a href="/register">Se Connecter</a>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-    </section><!-- /Register Section -->
+    </section><!-- /Login Section -->
 </main>
 {% endblock main %}
