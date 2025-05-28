@@ -21,87 +21,173 @@ Gestion des Commandes | Détails Commande
 
 {% block content %}
 <div class="row">
-    <div class="col-md-12">
-        <div class="card mb-4">
-            <div class="card-header">
-                <div class="row">
-                    <div class="col-6">
-                        <h3 class="card-title">Détails Commande</h3>
+    <div class="col-6">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                <h3 class="card-title">Détails Commande</h3>
+                            </div>
+                            <div class="col-6 text-end">
+                                <a href="/commandes" class="btn btn-dark">Retour</a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-6 text-end">
-                        <a href="/commandes" class="btn btn-dark">Retour</a>
-                      
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <strong>ID: </strong><span>CMD-001234</span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>Client: </strong><span>Ali Ben Salah</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <strong>Montant Total: </strong><span>1,475.000 DT</span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>Nombre d'Articles: </strong><span>7</span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>Date: </strong>
+                                        <span>25/05/2025 14:30</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <!-- Optional footer content -->
                     </div>
                 </div>
             </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                <strong>ID: </strong><span>{{ commande.id }}</span>
-                            </li>
-                            <li class="list-group-item">
-                                <strong>Client: </strong>
-                                <span>{{ commande.client.nom if commande.client else 'Client ID: ' + commande.client_id|string }}</span>
-                            </li>
-                        </ul>
+        </div>
+    </div>
+
+    <div class="col-6">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h4>Informations sur le client</h4>
                     </div>
-                    <div class="col-md-6">
+                    <div class="card-body">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
-                                <strong>Montant Total: </strong><span>{{ commande.montant_total }} DT</span>
+                                <strong>Contact: </strong><span>+216 22 334 556</span>
                             </li>
                             <li class="list-group-item">
-                                <strong>Nombre d'Articles: </strong><span>{{ commande.nb_article }}</span>
+                                <strong>Email: </strong><span>ali.salah@example.com</span>
                             </li>
                             <li class="list-group-item">
-                                <strong>Date: </strong>
-                                <span>{{ commande.date_creation.strftime('%d/%m/%Y %H:%M') }}</span>
+                                <strong>Adresse: </strong><span>Rue de la République, Tunis</span>
                             </li>
                         </ul>
                     </div>
                 </div>
-            </div>
-            <div class="card-footer">
-                
             </div>
         </div>
     </div>
 </div>
 
-<!-- Section pour les informations supplémentaires -->
+<!-- Section pour la liste des produits (statique - domaine tech) -->
 <div class="row">
     <div class="col-md-12">
         <div class="card mb-4">
             <div class="card-header">
-                <h4>Informations sur le client</h4>
+                <div class="row">
+                    <div class="col-6">
+                        <h4>Liste des Produits</h4>
+                    </div>
+                    <div class="col-6 text-end">
+                        <a href="/commandes" class="btn btn-dark">Ajouter Produit</a>
+                    </div>
+                </div>
             </div>
             <div class="card-body">
-                {% if commande.client %}
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <strong>Contact: </strong>
-                        <span>{{ commande.client.telephone or 'Non renseigné' }}</span>
-                    </li>
-                    <li class="list-group-item">
-                        <strong>Email: </strong>
-                        <span>{{ commande.client.email or 'Non renseigné' }}</span>
-                    </li>
-                    <li class="list-group-item">
-                        <strong>Adresse: </strong>
-                        <span>{{ commande.client.adresse or 'Non renseignée' }}</span>
-                    </li>
-                </ul>
-                {% else %}
-                <div class="alert alert-info">
-                    Aucune information supplémentaire disponible sur le client
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Nom du Produit</th>
+                                <th>Quantité</th>
+                                <th>Prix Unitaire (DT)</th>
+                                <th>Prix Total (DT)</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Clavier Mécanique RGB</td>
+                                <td>2</td>
+                                <td>120.000</td>
+                                <td>240.000</td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-warning me-1">Modifier</a>
+                                    <a href="#" class="btn btn-sm btn-danger">Supprimer</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Souris Gamer Sans Fil</td>
+                                <td>1</td>
+                                <td>85.000</td>
+                                <td>85.000</td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-warning me-1">Modifier</a>
+                                    <a href="#" class="btn btn-sm btn-danger">Supprimer</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Écran 27" Full HD</td>
+                                <td>1</td>
+                                <td>600.000</td>
+                                <td>600.000</td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-warning me-1">Modifier</a>
+                                    <a href="#" class="btn btn-sm btn-danger">Supprimer</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Casque Audio Bluetooth</td>
+                                <td>2</td>
+                                <td>150.000</td>
+                                <td>300.000</td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-warning me-1">Modifier</a>
+                                    <a href="#" class="btn btn-sm btn-danger">Supprimer</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>Disque Dur SSD 1TB</td>
+                                <td>1</td>
+                                <td>250.000</td>
+                                <td>250.000</td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-warning me-1">Modifier</a>
+                                    <a href="#" class="btn btn-sm btn-danger">Supprimer</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                {% endif %}
             </div>
         </div>
     </div>
 </div>
+
 {% endblock content %}
 
 {% block js %}
