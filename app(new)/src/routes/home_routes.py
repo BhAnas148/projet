@@ -13,3 +13,16 @@ def home():
     
     return render_template('frontend/index.html')
     
+@home_routes.route('/cart')
+#@is_logged_in
+def cart():
+    return render_template('frontend/cart.html')
+
+@home_routes.route('/about')
+#@is_logged_in
+def about():
+    return render_template('frontend/about.html')
+@home_routes.route('/el_produit')
+#@is_logged_in
+def el_produit():
+    return render_template('frontend/el_produit.html')

@@ -1,0 +1,39 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+Dashboard Power BI
+{% endblock title %}
+
+{% block breadcrumb %}
+<div class="row">
+    <div class="col-sm-6">
+        <h3 class="mb-0">Dashboard Power BI</h3>
+    </div>
+    <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-end">
+            <li class="breadcrumb-item"><a href="/">Accueil</a></li>
+            <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+    </div>
+</div>
+{% endblock breadcrumb %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-header">
+        <h3 class="card-title">Rapport Power BI intégré</h3>
+    </div>
+    <div class="card-body text-center">
+        <iframe title="Power BI" width="100%" height="1000"
+                src="https://app.powerbi.com/reportEmbed?reportId=451a2c9d-fbaf-4942-a24f-ea1b4376a6d8&autoAuth=true&ctid=1158e2d5-dc24-41ad-abce-62841076dbde"
+                frameborder="0" allowFullScreen="true">
+        </iframe>
+    </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+    document.getElementById('menu_dashboard')?.classList.add('active');
+</script>
+{% endblock js %}

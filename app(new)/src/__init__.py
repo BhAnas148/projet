@@ -13,6 +13,8 @@ from src.routes.client_routes import client_routes
 from src.routes.commercial_routes import commercial_routes
 from src.routes.analyste_routes import analyste_routes 
 from src.routes.image_routes import image_routes
+from src.routes.dashboard_routes import dashboard_routes 
+
 
 from src.routes.user_routes import user_routes
 from src.routes.home_routes import home_routes
@@ -37,6 +39,8 @@ def create_app():
     app.register_blueprint(commercial_routes)
     app.register_blueprint(analyste_routes) 
     app.register_blueprint(image_routes) 
+    app.register_blueprint(dashboard_routes) 
+
 
     app.register_blueprint(user_routes, url_prefix='/')
     app.register_blueprint(home_routes, url_prefix='/')
