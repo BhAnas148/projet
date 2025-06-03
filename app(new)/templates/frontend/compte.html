@@ -1,0 +1,197 @@
+{% extends "layouts/base_client.html" %}
+
+{% block main %}
+ <main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title light-background">
+      <div class="container">
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li class="current">Account</li>
+          </ol>
+        </nav>
+        <h1>Account</h1>
+      </div>
+    </div><!-- End Page Title -->
+
+    <!-- Account Section -->
+    <section id="account" class="account section">
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <!-- Mobile Sidebar Toggle Button -->
+        <div class="sidebar-toggle d-lg-none mb-3">
+          <button class="btn btn-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#profileSidebar" aria-expanded="false" aria-controls="profileSidebar">
+            <i class="bi bi-list me-2"></i> Profile Menu
+          </button>
+        </div>
+
+        <div class="row">
+          <!-- Profile Sidebar -->
+          <div class="col-lg-3 profile-sidebar collapse d-lg-block" id="profileSidebar" data-aos="fade-right" data-aos-delay="200">
+            <div class="profile-header">
+              <div class="profile-avatar">
+                <span>S</span>
+              </div>
+              <div class="profile-info">
+                <h4>Sarah Anderson</h4>
+                <div class="profile-bonus">
+                  <i class="bi bi-gift"></i>
+                  <span>100 bonuses available</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="profile-nav">
+              <ul class="nav flex-column" id="profileTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="personal-tab" data-bs-toggle="tab" data-bs-target="#personal" type="button" role="tab" aria-controls="personal" aria-selected="true">
+                    <i class="bi bi-person"></i>
+                    <span>Personal info</span>
+                  </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="addresses-tab" data-bs-toggle="tab" data-bs-target="#addresses" type="button" role="tab" aria-controls="addresses" aria-selected="false">
+                    <i class="bi bi-geo-alt"></i>
+                    <span>Addresses</span>
+                  </button>
+                </li>
+              </ul>
+
+              <h6 class="nav-section-title">Customer service</h6>
+              <ul class="nav flex-column">
+                <li class="nav-item">
+                  <a href="#" class="nav-link logout">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span>Log out</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Profile Content -->
+          <div class="col-lg-9 profile-content" data-aos="fade-left" data-aos-delay="300">
+            <div class="tab-content" id="profileTabsContent">
+              <!-- Personal Info Tab -->
+              <div class="tab-pane fade show active" id="personal" role="tabpanel" aria-labelledby="personal-tab">
+                <div class="tab-header">
+                  <h2>Personal Information</h2>
+                </div>
+                <div class="personal-info-form" data-aos="fade-up" data-aos-delay="100">
+                  <form class="php-email-form">
+                    <div class="row">
+                      <div class="col-md-6 mb-3">
+                        <label for="firstName" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="firstName" name="firstName" value="Lorem" required="">
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label for="lastName" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="lastName" name="lastName" value="Ipsum" required="">
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" value="lorem@example.com" required="">
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label for="phone" class="form-label">Phone</label>
+                        <input type="tel" class="form-control" id="phone" name="phone" value="+1 (555) 123-4567">
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="birthdate" class="form-label">Date of Birth</label>
+                      <input type="date" class="form-control" id="birthdate" name="birthdate" value="1990-01-01">
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label d-block">Gender</label>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="gender" id="genderMale" value="male" checked="">
+                        <label class="form-check-label" for="genderMale">Male</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="gender" id="genderFemale" value="female">
+                        <label class="form-check-label" for="genderFemale">Female</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="gender" id="genderOther" value="other">
+                        <label class="form-check-label" for="genderOther">Other</label>
+                      </div>
+                    </div>
+                    <div class="loading">Loading</div>
+                    <div class="error-message"></div>
+                    <div class="sent-message">Your information has been updated. Thank you!</div>
+                    <div class="text-end">
+                      <button type="submit" class="btn btn-save">Save Changes</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <!-- Addresses Tab -->
+              <div class="tab-pane fade" id="addresses" role="tabpanel" aria-labelledby="addresses-tab">
+                <div class="tab-header">
+                  <h2>My Addresses</h2>
+                  <button class="btn btn-add-address" type="button">
+                    <i class="bi bi-plus-lg"></i> Add new address
+                  </button>
+                </div>
+                <div class="addresses-list">
+                  <div class="row">
+                    <!-- Address Item 1 -->
+                    <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                      <div class="address-item">
+                        <div class="address-header">
+                          <h5>Home Address</h5>
+                          <div class="address-actions">
+                            <button class="btn-edit-address" type="button">
+                              <i class="bi bi-pencil"></i>
+                            </button>
+                            <button class="btn-delete-address" type="button">
+                              <i class="bi bi-trash"></i>
+                            </button>
+                          </div>
+                        </div>
+                        <div class="address-content">
+                          <p>123 Main Street<br>Apt 4B<br>New York, NY 10001<br>United States</p>
+                        </div>
+                        <div class="default-badge">Default</div>
+                      </div>
+                    </div><!-- End Address Item -->
+
+                    <!-- Address Item 2 -->
+                    <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                      <div class="address-item">
+                        <div class="address-header">
+                          <h5>Work Address</h5>
+                          <div class="address-actions">
+                            <button class="btn-edit-address" type="button">
+                              <i class="bi bi-pencil"></i>
+                            </button>
+                            <button class="btn-delete-address" type="button">
+                              <i class="bi bi-trash"></i>
+                            </button>
+                          </div>
+                        </div>
+                        <div class="address-content">
+                          <p>456 Business Ave<br>Suite 200<br>San Francisco, CA 94107<br>United States</p>
+                        </div>
+                        <button class="btn btn-sm btn-make-default" type="button">Make default</button>
+                      </div>
+                    </div><!-- End Address Item -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section><!-- /Account Section -->
+
+  </main>
+{% endblock main %}

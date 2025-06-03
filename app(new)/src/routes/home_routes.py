@@ -22,7 +22,23 @@ def cart():
 #@is_logged_in
 def about():
     return render_template('frontend/about.html')
-@home_routes.route('/el_produit')
+@home_routes.route('/les_produit')
 #@is_logged_in
-def el_produit():
-    return render_template('frontend/el_produit.html')
+def les_produit():
+    return render_template('frontend/les_produit.html')
+@home_routes.route('/contact')
+#@is_logged_in
+def contact():
+    return render_template('frontend/contact.html')
+@home_routes.route('/vérifier')
+#@is_logged_in
+def vérifier():
+    return render_template('frontend/vérifier.html')
+@home_routes.route('/produit_details')
+#@is_logged_in
+def produit_details():
+    return render_template('frontend/produit_details.html')
+@home_routes.route('/compte')
+#@is_logged_in
+def compte():
+    return render_template('frontend/compte.html')

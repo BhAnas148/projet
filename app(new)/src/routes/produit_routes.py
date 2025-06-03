@@ -155,10 +155,8 @@ def update(produit_id):
 def delete(produit_id):
     # Optional: Delete associated image file when deleting product
     produit = ProduitController.read_one(produit_id)
-    if produit and produit.image_nom and produit.image_nom != 'default.jpg':
-        file_path = os.path.join(UPLOAD_FOLDER, produit.image_nom)
-        if os.path.exists(file_path):
-            os.remove(file_path)
+    if not produit:
+        return redirect(url_for('produit.index'))
 
     success, result = ProduitController.delete(produit_id)
     return redirect(url_for('produit.index'))
