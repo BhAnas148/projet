@@ -43,6 +43,15 @@ class ProduitController:
         return Produit.query.all()
 
     @staticmethod
+    def read_by_sous_categorie(sous_categorie_id):
+        return Produit.query.filter_by(sous_categorie_id=sous_categorie_id).all()
+
+    @staticmethod
+    def read_by_categorie(categorie_id):
+        return Produit.query.filter_by(categorie_id=categorie_id).all()
+
+
+    @staticmethod
     def read_one(produit_id):
         return Produit.query.get(produit_id)
 

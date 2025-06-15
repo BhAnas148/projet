@@ -1,0 +1,127 @@
+{% extends "layouts/base_client.html" %}
+
+{% block main %}
+<main class="main">
+    {% if type == "sous_categorie" %}
+    <div class="page-title light-background position-relative">
+        <div class="container">
+            <nav class="breadcrumbs">
+                <ol>
+                    <li><a href="/">Home</a></li>
+                    <li class="current">Catégorie: {{ sous_categorie.categorie.nom }}</li>
+                </ol>
+            </nav>
+            <h1>Sous Catégorie: {{ sous_categorie.nom }}</h1>
+        </div>
+    </div>
+    {% endif %}
+
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-4 sidebar">
+
+                <div class="widgets-container">
+
+                    <!-- Product Categories Widget -->
+                    <div class="product-categories-widget widget-item">
+
+                        <h3 class="widget-title">Catégories</h3>
+
+                        <ul class="category-tree list-unstyled mb-0">
+                            {% for categorie in categories %}
+                            <li class="category-item">
+                                <div class="d-flex justify-content-between align-items-center category-header collapsed"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#categories-{{ categorie.id }}-clothing-subcategories"
+                                    aria-expanded="false"
+                                    aria-controls="categories-{{ categorie.id }}-clothing-subcategories">
+                                    <a href="javascript:void(0)" class="category-link">{{ categorie.nom }}</a>
+                                    <span class="category-toggle">
+                                        <i class="bi bi-chevron-down"></i>
+                                        <i class="bi bi-chevron-up"></i>
+                                    </span>
+                                </div>
+                                <ul id="categories-{{ categorie.id }}-clothing-subcategories"
+                                    class="subcategory-list list-unstyled collapse ps-3 mt-2">
+                                    {% for sous_categorie in categorie.sous_categories %}
+                                    <li>
+                                        <a href="/{{ sous_categorie.id }}/produits" class="subcategory-link">
+                                            {{ sous_categorie.nom }}
+                                        </a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            {% endfor %}
+                        </ul>
+
+                    </div><!--/Product Categories Widget -->
+                </div>
+
+            </div>
+
+            <div class="col-lg-8">
+
+                <!-- Category Header Section -->
+                <section id="category-header" class="category-header section">
+                    <div class="container" data-aos="fade-up">
+                    </div>
+                </section><!-- /Category Header Section -->
+
+                <section id="category-product-list" class="category-product-list section">
+                    <div class="container" data-aos="fade-up" data-aos-delay="100">
+                        <div class="row gy-4">
+                            {% for produit in produits %}
+                            <div class="col-lg-6">
+                                <div class="product-box">
+                                    <div class="product-thumb">
+
+                                        <img src="/static/produits/{{ produit.images[0].nom }}" alt="Product Image"
+                                            class="main-img" loading="lazy">
+                                        <div class="product-overlay">
+                                            <div class="product-quick-actions">
+                                                <button type="button" class="quick-action-btn">
+                                                    <i class="bi bi-heart"></i>
+                                                </button>
+                                                <button type="button" class="quick-action-btn">
+                                                    <i class="bi bi-arrow-repeat"></i>
+                                                </button>
+                                                <button type="button" class="quick-action-btn">
+                                                    <i class="bi bi-eye"></i>
+                                                </button>
+                                            </div>
+                                            <div class="add-to-cart-container">
+                                                <button type="button" class="add-to-cart-btn">Add to Cart</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="product-content">
+                                        <div class="product-details">
+                                            <h3 class="product-title">
+                                                <a href="/{{ sous_categorie.id }}/produits/{{ produit.id }}">
+                                                    {{ produit.designation }}
+                                                </a>
+                                            </h3>
+                                            <div class="product-price">
+                                                <span>{{ "%.3f"|format(produit.prix_vente) }} TND</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="col-12">
+                                <div class="alert alert-info text-center" role="alert">
+                                    Aucun produit trouvé dans cette catégorie.
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock main %}

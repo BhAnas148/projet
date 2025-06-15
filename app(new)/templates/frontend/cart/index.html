@@ -1,0 +1,365 @@
+{% extends "layouts/base_client.html" %}
+
+{% block main %}
+<main class="main">
+    <!-- Page Title -->
+    <div class="page-title light-background">
+        <div class="container">
+            <nav class="breadcrumbs">
+                <ol>
+                    <li><a href="index.html">Home</a></li>
+                    <li class="current">Cart</li>
+                </ol>
+            </nav>
+            <h1>Cart</h1>
+        </div>
+    </div><!-- End Page Title -->
+
+    <!-- Cart Section -->
+    <section id="cart" class="cart section">
+
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+            <div class="row">
+                <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
+                    <div class="cart-items">
+                        <div class="cart-header d-none d-lg-block">
+                            <div class="row align-items-center">
+                                <div class="col-lg-6">
+                                    <h5>Produit</h5>
+                                </div>
+                                <div class="col-lg-2 text-center">
+                                    <h5>Prix</h5>
+                                </div>
+                                <div class="col-lg-2 text-center">
+                                    <h5>Quantité</h5>
+                                </div>
+                                <div class="col-lg-2 text-center">
+                                    <h5>Total</h5>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% set cart = session.get('cart', []) %}
+
+                        {% for item in cart %}
+                        <div class="cart-item" data-product-key="{{ item }}">
+                            <div class="row align-items-center">
+                                <div class="col-lg-6 col-12 mt-3 mt-lg-0 mb-lg-0 mb-3">
+                                    <div class="product-info d-flex align-items-center">
+                                        <div class="product-image">
+                                            <img src="/static/produits/{{ cart.get(item).get('image') }}" alt="Product"
+                                                class="img-fluid" loading="lazy">
+                                        </div>
+                                        <div class="product-details">
+                                            <h6 class="product-title">
+                                                {{ cart.get(item).get('designation') }}
+                                            </h6>
+                                            <a class="remove-item" href="/remove_from_cart/{{ item }}">
+                                                <i class="bi bi-trash"></i> Remove
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-12 mt-3 mt-lg-0 text-center">
+                                    <div class="price-tag">
+                                        <span class="current-price">
+                                            {{ "%.2f"|format(cart.get(item).get('prix_vente')) }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-12 mt-3 mt-lg-0 text-center">
+                                    <div class="quantity-selector">
+                                        <button class="quantity-btn decrease">
+                                            <i class="bi bi-dash"></i>
+                                        </button>
+                                        <input type="number" class="quantity-input"
+                                            value="{{ cart.get(item).get('quantity') }}" min="1" max="10">
+                                        <button class="quantity-btn increase">
+                                            <i class="bi bi-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-12 mt-3 mt-lg-0 text-center">
+                                    <div class="item-total">
+                                        <span>
+                                            {{ "%.2f"|format(cart.get(item).get('quantity') *
+                                            cart.get(item).get('prix_vente')) }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                        <div class="cart-actions">
+                            <div class="row">
+                                <div class="col-lg-6 mb-3 mb-lg-0">
+                                    <div class="coupon-form">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Coupon code">
+                                            <button class="btn btn-outline-accent" type="button">Apply Coupon</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 text-md-end">
+                                    <button id="update-cart-btn" class="btn btn-outline-heading me-2">
+                                        <i class="bi bi-arrow-clockwise"></i> Update Cart
+                                    </button>
+                                    <button id="clear-cart-btn" class="btn btn-outline-remove">
+                                        <i class="bi bi-trash"></i> Clear Cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if suggestions %}
+                    <div class="cart-summary">
+                        <h4 class="summary-title">Suggessions</h4>
+
+                        <div class="cart-items">
+                            <div class="cart-header d-none d-lg-block">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-6">
+                                        <h5>Produit</h5>
+                                    </div>
+                                    <div class="col-lg-2 text-center">
+                                        <h5>Prix</h5>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% for suggestion in suggestions %}
+                            <div class="cart-item" data-product-key="{{ suggestion.produit_id }}">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-6 col-12 mt-3 mt-lg-0 mb-lg-0 mb-3">
+                                        <div class="product-info d-flex align-items-center">
+                                            <div class="product-image">
+                                                <img src="/static/produits/{{ suggestion.image }}" alt="Product"
+                                                    class="img-fluid" loading="lazy">
+                                            </div>
+                                            <div class="product-details">
+                                                <h6 class="product-title">
+                                                    {{ suggestion.designation }}
+                                                </h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-12 mt-3 mt-lg-0 text-center">
+                                        <div class="price-tag">
+                                            <span class="current-price">
+                                                {{ "%.2f"|format(suggestion.prix_vente) }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-12 mt-3 mt-lg-0 text-right">
+                                        <a class="btn btn-primary add-to-cart-btn"
+                                            href="/add_to_cart/{{ suggestion.produit_id }}">
+                                            <i class="bi bi-cart-plus"></i> Add to Cart
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="300">
+                    <div class="cart-summary">
+                        <h4 class="summary-title">Order Summary</h4>
+
+                        <div class="summary-item">
+                            <span class="summary-label">Sous-total</span>
+                            <span class="summary-value">
+                                {{ "%.2f"|format(session.get('total', 0)) }} TND
+                            </span>
+                        </div>
+
+                        <div class="summary-item shipping-item">
+                            <span class="summary-label">Livraison</span>
+                            <div class="shipping-options">
+                                <div class="form-check text-end">
+                                    <input class="form-check-input shipping-option" type="radio" name="shipping"
+                                        value="4.99" {% if session.get('total', 0) < 300 %} checked {% endif %}>
+                                    <label class="form-check-label" for="standard">
+                                        Livraison Standard - 4.99 TND
+                                    </label>
+                                </div>
+                                <div class="form-check text-end">
+                                    <input class="form-check-input shipping-option" type="radio" name="shipping"
+                                        value="12.99">
+                                    <label class="form-check-label" for="express">
+                                        Livraison Express - 12.99 TND
+                                    </label>
+                                </div>
+                                <div class="form-check text-end">
+                                    <input class="form-check-input shipping-option" type="radio" name="shipping"
+                                        value="0" data-free="300" {% if session.get('total', 0)>= 300 %}
+                                    checked
+                                    {% endif %}
+                                    >
+                                    <label class="form-check-label" for="free">
+                                        Livraison Gratuite (Commandes de plus de 300 TND)
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="summary-item">
+                            <span class="summary-label">Tax</span>
+                            <span class="summary-value">
+                                {{ "%.2f"|format(session.get('total', 0) * 0.19) }} TND
+                            </span>
+                        </div>
+
+                        <div class="summary-item discount">
+                            <span class="summary-label">Remise</span>
+                            <span class="summary-value">-$0.00</span>
+                        </div>
+
+                        <div class="summary-total">
+                            <span class="summary-label">Total</span>
+                            <span class="summary-value">
+                                <span class="summary-value" id="final-total">
+                                    {{ "%.2f"|format(session.get('total', 0) * 1.19 + 4.99) }} TND
+                                </span>
+                            </span>
+                        </div>
+
+                        <div class="checkout-button">
+                            <a href="#" class="btn btn-accent w-100">
+                                Procéder à la commande <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+
+                        <div class="continue-shopping">
+                            <a href="/" class="btn btn-link w-100">
+                                <i class="bi bi-arrow-left"></i> Continuer vos achats
+                            </a>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section><!-- /Cart Section -->
+</main>
+
+
+{% endblock main %}
+
+{% block js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const baseTotal = {{ session.get('total', 0) | float
+    }};
+    const taxRate = 0.19;
+    const freeShippingThreshold = 300;
+
+    const totalElement = document.getElementById('final-total');
+    const shippingInputs = document.querySelectorAll('.shipping-option');
+    const updateCartBtn = document.getElementById('update-cart-btn');
+    const clearCartBtn = document.getElementById('clear-cart-btn');
+
+    function updateTotal() {
+        let currentShipping = parseFloat(document.querySelector('.shipping-option:checked').value);
+        const isFreeShipping = document.querySelector('.shipping-option:checked').dataset.free;
+
+        if (isFreeShipping && baseTotal >= freeShippingThreshold) {
+            currentShipping = 0;
+        }
+
+        const totalWithTax = baseTotal * (1 + taxRate);
+        const finalTotal = totalWithTax + currentShipping;
+
+        totalElement.innerText = finalTotal.toFixed(2) + " TND";
+    }
+
+    shippingInputs.forEach(input => {
+        input.addEventListener('change', updateTotal);
+    });
+
+    // Initial total calculation
+    updateTotal();
+
+    // Function to gather updated quantities and send to /update_cart
+    updateCartBtn.addEventListener('click', () => {
+        // Gather updated quantities indexed by product id or key
+        // Since your cart keys are in 'cart', and each quantity input is inside the cart item div,
+        // we need to find those inputs and identify the product
+
+        // Assuming you add a data attribute to each cart-item div for product key,
+        // If not, let's modify the HTML a bit below to add it (see note)
+
+        const updatedCart = {};
+
+        document.querySelectorAll('.cart-item').forEach(cartItem => {
+            // Get product key from data attribute
+            const productKey = cartItem.getAttribute('data-product-key');
+            if (!productKey) return;
+
+            const quantityInput = cartItem.querySelector('.quantity-input');
+            const quantity = quantityInput ? parseInt(quantityInput.value) : 1;
+            updatedCart[productKey] = quantity;
+        });
+
+        // Also get selected shipping option
+        const selectedShipping = document.querySelector('.shipping-option:checked').value;
+
+        fetch('/update_cart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+
+            },
+            body: JSON.stringify({
+                cart: updatedCart,
+                shipping: selectedShipping
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Cart updated successfully!');
+                    location.reload();  // Reload page to reflect changes
+                } else {
+                    alert('Error updating cart.');
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert('Error updating cart.');
+            });
+    });
+
+    // Clear cart button
+    clearCartBtn.addEventListener('click', () => {
+        fetch('/clear_cart', {
+            method: 'POST',
+
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Cart cleared!');
+                    location.href = '/';  // redirect to homepage;
+                } else {
+                    alert('Error clearing cart.');
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert('Error clearing cart.');
+            });
+    });
+
+});
+</script>
+
+{% endblock js %}

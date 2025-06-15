@@ -1,3 +1,12 @@
+from src.entities.achat import Achat
+from src.entities.image import Image
+from src.entities.sous_categorie import SousCategorie
+from src.entities.categorie import Categorie
+from src.entities.produit import Produit
+from src.entities.commande import Commande
+from src.entities.commande_produit import CommandeProduit
+from src.entities.user import User, UserRole
+from main import db, create_app
 import sys
 from datetime import datetime
 from passlib.hash import pbkdf2_sha256 as sha256
@@ -5,33 +14,24 @@ from passlib.hash import pbkdf2_sha256 as sha256
 # Add your application directory to the path
 sys.path.append('./main.py')
 
-from main import db, create_app
-from src.entities.user import User, UserRole
-from src.entities.commande_produit import CommandeProduit
-from src.entities.commande import Commande
-from src.entities.produit import Produit
-from src.entities.categorie import Categorie
-from src.entities.sous_categorie import SousCategorie
-from src.entities.image import Image
-from src.entities.achat import Achat
 
 def clear_database():
     """Delete all records in proper order to respect foreign key constraints"""
     try:
-        
+
         db.session.query(CommandeProduit).delete()
         db.session.query(Commande).delete()
         db.session.query(Achat).delete()
-        
+
         db.session.query(Image).delete()
-        
+
         db.session.query(Produit).delete()
-       
+
         db.session.query(SousCategorie).delete()
         db.session.query(Categorie).delete()
-        
+
         num_users = db.session.query(User).delete()
-        
+
         db.session.commit()
         return True
     except Exception as e:
@@ -39,14 +39,35 @@ def clear_database():
         print(f"Error clearing database: {str(e)}")
         return False
 
+
 def create_default_users():
+    categories = {
+        "Électronique": [
+            "Smartphones", "Écouteurs", "Ordinateurs portables", "Téléviseurs", "Casques audio", "Drones"
+        ],
+        "Électroménager": [
+            "Réfrigérateurs", "Fours", "Micro-ondes", "Mixeurs", "Aspirateurs", "Grille-pain"
+        ],
+        "Mode et accessoires": [
+            "Sacs à main", "Montres homme", "Montres femme", "Casquettes", "Lisseurs", "Montres digitales"
+        ],
+        "Beauté et soins": [
+            "Parfums femme", "Maquillage", "Crèmes solaires", "Brosses à cheveux", "Brosses à dents", "Rasoirs électriques"
+        ],
+        "Maison et déco": [
+            "Chaises", "Tables à manger", "Tapis"
+        ],
+        "Sports et loisirs": [
+            "Vélos", "Ballons de foot", "Élastiques de fitness"
+        ]
+    }
     app = create_app()
     with app.app_context():
         try:
             # Clear the entire database first
             if not clear_database():
                 return
-            
+
             # Default users data
             default_users = [
                 {
@@ -125,11 +146,26 @@ def create_default_users():
 
             db.session.commit()
             print(f"Successfully created {users_created} default users.")
-            
+
+            # Now add categories and subcategories
+            for cat_name, subcats in categories.items():
+                category = Categorie(nom=cat_name)
+                db.session.add(category)
+                db.session.flush()  # Ensure category.id is available
+
+                for subcat_name in subcats:
+                    sous_cat = SousCategorie(
+                        nom=subcat_name, categorie_id=category.id)
+                    db.session.add(sous_cat)
+
+            db.session.commit()
+            print("Categories and subcategories successfully added.")
+
         except Exception as e:
             db.session.rollback()
             print(f"An error occurred: {str(e)}")
             raise
+
 
 if __name__ == '__main__':
     create_default_users()

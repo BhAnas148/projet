@@ -1,0 +1,245 @@
+{% extends "layouts/base_client.html" %}
+
+{% block main %}
+<main class="main">
+    <!-- Page Title -->
+    <div class="page-title light-background">
+        <div class="container">
+            <nav class="breadcrumbs">
+                <ol>
+                    <li><a href="/">Home</a></li>
+                    <li class="current">Détails du produit</li>
+                </ol>
+            </nav>
+            <h1>Détails du produit</h1>
+        </div>
+    </div><!-- End Page Title -->
+
+    <!-- Product Details Section -->
+    <section id="product-details" class="product-details section">
+
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+            <div class="row g-5">
+                <!-- Product Images Column -->
+                <div class="col-lg-6 mb-5 mb-lg-0" data-aos="fade-right" data-aos-delay="200">
+                    <div class="product-gallery">
+                        <!-- Vertical Thumbnails -->
+                        <div class="thumbnails-vertical">
+                            <div class="thumbnails-container">
+                                {% for image in produit.images %}
+                                {% if image.is_primary %}
+                                <div class="thumbnail-item active" data-image="/static/produits/{{ image.nom }}">
+                                    <img src="/static/produits/{{ image.nom }}" alt="Product Thumbnail"
+                                        class="img-fluid">
+                                </div>
+                                {% else %}
+                                <div class="thumbnail-item" data-image="/static/produits/{{ image.nom }}">
+                                    <img src="/static/produits/{{ image.nom }}" alt="Product Thumbnail"
+                                        class="img-fluid">
+                                </div>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <!-- Main Image -->
+                        <div class="main-image-wrapper">
+                            <div class="image-zoom-container">
+                                {% for image in produit.images %}
+                                {% if image.is_primary %}
+                                <a href="/static/produits/{{ image.nom }}" class="glightbox"
+                                    data-gallery="product-gallery">
+                                    <img src="/static/produits/{{ image.nom }}" alt="Product Image"
+                                        class="img-fluid main-image drift-zoom" id="main-product-image"
+                                        data-zoom="/static/produits/{{ image.nom }}">
+                                    <div class="zoom-overlay">
+                                        <i class="bi bi-zoom-in"></i>
+                                    </div>
+                                </a>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                            <div class="image-nav">
+                                <button class="image-nav-btn prev-image">
+                                    <i class="bi bi-chevron-left"></i>
+                                </button>
+                                <button class="image-nav-btn next-image">
+                                    <i class="bi bi-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Info Column -->
+                <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
+                    <div class="product-info-wrapper" id="product-info-sticky">
+                        <!-- Product Meta -->
+                        <div class="product-meta">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="product-category">
+                                    {{ produit.categorie.nom }} > {{ produit.sous_categorie.nom }}
+                                </span>
+                                <div class="product-share">
+
+                                </div>
+                            </div>
+
+                            <h1 class="product-title">{{ produit.designation }}</h1>
+                        </div>
+
+                        <!-- Product Price -->
+                        <div class="product-price-container">
+                            <div class="price-wrapper">
+                                <span class="current-price">
+                                    {{ "%.3f"|format(produit.prix_vente) }} TND
+                                </span>
+                            </div>
+
+                        </div>
+
+                        <!-- Product Description -->
+                        <div class="product-short-description">
+                            <p>
+                                {{ produit.description | truncate(200, True)}}
+                            </p>
+                        </div>
+
+                        <!-- Product Options -->
+                        <div class="product-options">
+
+                            <!-- Quantity Selector -->
+                            <div class="option-group">
+                                <h6 class="option-title">Quantity</h6>
+                                <div class="quantity-selector">
+                                    <button class="quantity-btn decrease">
+                                        <i class="bi bi-dash"></i>
+                                    </button>
+                                    <input type="number" id="quantity" class="quantity-input" value="1" min="1"
+                                        max="24">
+                                    <button class="quantity-btn increase">
+                                        <i class="bi bi-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="product-actions">
+                            <button class="btn btn-primary add-to-cart-btn" id="add-to-cart-btn">
+                                <i class="bi bi-cart-plus"></i> Add to Cart
+                            </button>
+
+                            <button class="btn btn-outline-secondary wishlist-btn" aria-label="Add to wishlist">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+
+                        <!-- Delivery Options -->
+                        <div class="delivery-options">
+                            <div class="delivery-option">
+                                <i class="bi bi-truck"></i>
+                                <div>
+                                    <h6>Free Shipping</h6>
+                                    <p>On orders over $50</p>
+                                </div>
+                            </div>
+                            <div class="delivery-option">
+                                <i class="bi bi-arrow-repeat"></i>
+                                <div>
+                                    <h6>30-Day Returns</h6>
+                                    <p>Hassle-free returns</p>
+                                </div>
+                            </div>
+                            <div class="delivery-option">
+                                <i class="bi bi-shield-check"></i>
+                                <div>
+                                    <h6>2-Year Warranty</h6>
+                                    <p>Full coverage</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Details Accordion -->
+            <div class="row mt-5" data-aos="fade-up">
+                <div class="col-12">
+                    <div class="product-details-accordion">
+                        <!-- Description Accordion -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#description" aria-expanded="true" aria-controls="description">
+                                    Description
+                                </button>
+                            </h2>
+                            <div id="description" class="accordion-collapse collapse show">
+                                <div class="accordion-body">
+                                    <div class="product-description">
+                                        <p>{{ produit.description }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!-- /Product Details Section -->
+</main>
+
+<input type="hidden" id="produit_id" value="{{ produit.id }}">
+<input type="hidden" id="prix_vente" value="{{ produit.prix_vente }}">
+<input type="hidden" id="produit_designation" value="{{ produit.designation }}">
+{% for image in produit.images %}
+{% if image.is_primary %}
+<input type="hidden" id="produit_image" value="{{ image.nom }}">
+{% endif %}
+{% endfor %}
+
+
+{% endblock main %}
+
+{% block js %}
+<script>
+    const addToCartBtn = document.getElementById('add-to-cart-btn');
+    const quantityInput = document.getElementById('quantity');
+    const produitId = document.getElementById('produit_id');
+    const prixVente = document.getElementById('prix_vente');
+    const produitDesignation = document.getElementById('produit_designation');
+    const produitImage = document.getElementById('produit_image');
+    addToCartBtn.addEventListener('click', async function () {
+        console.log('Quantity:', quantityInput.value);
+        console.log('Product ID:', produitId.value);
+        console.log('Prix de Vente:', prixVente.value);
+        console.log('Produit Designation:', produitDesignation.value);
+        console.log('Produit Image:', produitImage.value);
+
+        const data = {
+            produit_id: produitId.value,
+            prix_vente: prixVente.value,
+            designation: produitDesignation.value,
+            image: produitImage.value,
+            quantity: quantityInput.value
+        };
+
+        const response = await fetch('/add_to_cart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            alert('Product added to cart successfully!');
+        } else {
+            alert('Error adding product to cart:', result.error);
+        }
+    });
+</script>
+{% endblock js %}

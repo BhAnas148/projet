@@ -190,36 +190,29 @@
                     <!--begin::User Menu Dropdown-->
                     <li class="nav-item dropdown user-menu">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img src="/static/assets/img/user2-160x160.jpg" class="user-image rounded-circle shadow"
+                            <img src="/static/assets/img/boxed-bg.jpg" class="user-image rounded-circle shadow"
                                 alt="User Image" />
-                            <span class="d-none d-md-inline">Alexander Pierce</span>
+                            <span class="d-none d-md-inline">{{ session.get('user_name')}} {{
+                                session.get('user_prenom')}}</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                             <!--begin::User Image-->
                             <li class="user-header text-bg-primary">
-                                <img src="/static/assets/img/user2-160x160.jpg" class="rounded-circle shadow"
+                                <img src="/static/assets/img/boxed-bg.jpg" class="rounded-circle shadow"
                                     alt="User Image" />
                                 <p>
-                                    Alexander Pierce - Web Developer
-                                    <small>Member since Nov. 2023</small>
+                                    {{ session.get('user_name')}} {{ session.get('user_prenom')}}
+                                    <small>{{ session.get('user_role')}}</small>
                                 </p>
                             </li>
                             <!--end::User Image-->
                             <!--begin::Menu Body-->
-                            <li class="user-body">
-                                <!--begin::Row-->
-                                <div class="row">
-                                    <div class="col-4 text-center"><a href="#">Followers</a></div>
-                                    <div class="col-4 text-center"><a href="#">Sales</a></div>
-                                    <div class="col-4 text-center"><a href="#">Friends</a></div>
-                                </div>
-                                <!--end::Row-->
-                            </li>
+
                             <!--end::Menu Body-->
                             <!--begin::Menu Footer-->
                             <li class="user-footer">
-                                <a href="#" class="btn btn-default btn-flat">Profile</a>
-                                <a href="#" class="btn btn-default btn-flat float-end">Sign out</a>
+                                <a href="/profile" class="btn btn-default btn-flat">Profile</a>
+                                <a href="/logout" class="btn btn-default btn-flat float-end">Sign out</a>
                             </li>
                             <!--end::Menu Footer-->
                         </ul>
@@ -255,10 +248,10 @@
                     {% if 'user_role' in session and session.get('user_role') == 'administrateur' %}
                     {% include "layouts/_menu_admin.html" %}
                     {% endif %}
-                     {% if 'user_role' in session and session.get('user_role') == 'commercial' %}
+                    {% if 'user_role' in session and session.get('user_role') == 'commercial' %}
                     {% include "layouts/_menu_commercial.html" %}
                     {% endif %}
-                     {% if 'user_role' in session and session.get('user_role') == 'analyste' %}
+                    {% if 'user_role' in session and session.get('user_role') == 'analyste' %}
                     {% include "layouts/_menu_analyste.html" %}
                     {% endif %}
                     <!--end::Sidebar Menu-->

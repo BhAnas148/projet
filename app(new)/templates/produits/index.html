@@ -37,7 +37,7 @@ Gestion des Produits
                 <tr>
                     <th>#</th>
                     <th>Designation</th>
-                    <th>Description</th>
+
                     <th>Prix</th>
                     <th>Catégorie</th>
                     <th>Sous-Catégorie</th>
@@ -49,12 +49,13 @@ Gestion des Produits
                 <tr class="align-middle">
                     <td>{{ produit.id }}</td>
                     <td>{{ produit.designation }}</td>
-                    <td>{{ produit.description }}</td>
-                    <td>{{ produit.prix_vente }}</td>
+
+                    <td>{{ "%.3f"|format(produit.prix_vente) }} TND</td>
                     <td>{{ produit.categorie.nom }}</td>
                     <td>{{ produit.sous_categorie.nom }}</td>
                     <td class="text-center">
-                        <a href="{{ url_for('produit.details', produit_id=produit.id) }}" class="btn btn-dark btn-sm">Détails</a>
+                        <a href="{{ url_for('produit.details', produit_id=produit.id) }}"
+                            class="btn btn-dark btn-sm">Détails</a>
 
                         <a href="{{ url_for('produit.update', produit_id=produit.id) }}"
                             class="btn btn-warning btn-sm">Modifier</a>

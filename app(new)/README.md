@@ -2,7 +2,7 @@
 - id
 - nom
 - prenom
-- date de naissance
+- date_de_naissance 
 - telephone
 - ville
 - adresse

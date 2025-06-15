@@ -37,35 +37,30 @@ Gestion des Commandes | Détails Commande
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-12">
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">
-                                        <strong>ID: </strong><span>CMD-001234</span>
+                                        <strong>ID: </strong><span>CMD-{{ commande.id}}</span>
+                                    </li>
+
+                                    <li class="list-group-item">
+                                        <strong>Montant Total: </strong><span>{{ montant_total }} DT</span>
                                     </li>
                                     <li class="list-group-item">
-                                        <strong>Client: </strong><span>Ali Ben Salah</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="col-md-6">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">
-                                        <strong>Montant Total: </strong><span>1,475.000 DT</span>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <strong>Nombre d'Articles: </strong><span>7</span>
+                                        <strong>Nombre d'Articles: </strong><span>
+                                            {{ nb_article }}
+                                        </span>
                                     </li>
                                     <li class="list-group-item">
                                         <strong>Date: </strong>
-                                        <span>25/05/2025 14:30</span>
+                                        <span>{{ commande.date_creation }}</span>
                                     </li>
                                 </ul>
                             </div>
+
                         </div>
                     </div>
-                    <div class="card-footer">
-                        <!-- Optional footer content -->
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -80,14 +75,20 @@ Gestion des Commandes | Détails Commande
                     </div>
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
+
                             <li class="list-group-item">
-                                <strong>Contact: </strong><span>+216 22 334 556</span>
+                                <strong>Client: </strong><span>
+                                    {{ commande.client.nom }} {{ commande.client.prenom }}
+                                </span>
                             </li>
                             <li class="list-group-item">
-                                <strong>Email: </strong><span>ali.salah@example.com</span>
+                                <strong>Contact: </strong><span>{{ commande.client.telephone }}</span>
                             </li>
                             <li class="list-group-item">
-                                <strong>Adresse: </strong><span>Rue de la République, Tunis</span>
+                                <strong>Email: </strong><span>{{ commande.client.email }}</span>
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Adresse: </strong><span>{{ commande.client.adresse }}</span>
                             </li>
                         </ul>
                     </div>
@@ -107,7 +108,7 @@ Gestion des Commandes | Détails Commande
                         <h4>Liste des Produits</h4>
                     </div>
                     <div class="col-6 text-end">
-                        <a href="/commandes" class="btn btn-dark">Ajouter Produit</a>
+                        <a href="/commandes/details/{{ commande.id }}/add" class="btn btn-dark">Ajouter Produit</a>
                     </div>
                 </div>
             </div>
@@ -125,61 +126,26 @@ Gestion des Commandes | Détails Commande
                             </tr>
                         </thead>
                         <tbody>
+                            {% for produit in produits %}
                             <tr>
-                                <td>1</td>
-                                <td>Clavier Mécanique RGB</td>
-                                <td>2</td>
-                                <td>120.000</td>
-                                <td>240.000</td>
+                                <td>{{ produit.id}}</td>
+                                <td>{{ produit.produit.designation }}</td>
+                                <td>{{ produit.quantite}}</td>
+                                <td>{{ produit.prix_unitaire}}</td>
+                                <td>{{ produit.prix_total}}</td>
                                 <td>
-                                    <a href="#" class="btn btn-sm btn-warning me-1">Modifier</a>
-                                    <a href="#" class="btn btn-sm btn-danger">Supprimer</a>
+                                    <a href="/commandes/details/{{ commande.id }}/edit/{{ produit.id }}"
+                                        class="btn btn-sm btn-warning me-1">Modifier</a>
+                                    <a href="/commandes/details/{{ commande.id }}/remove/{{ produit.id }}"
+                                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce produit de la commande ?');"
+                                        class="btn btn-sm btn-danger">Supprimer</a>
                                 </td>
                             </tr>
+                            {% else %}
                             <tr>
-                                <td>2</td>
-                                <td>Souris Gamer Sans Fil</td>
-                                <td>1</td>
-                                <td>85.000</td>
-                                <td>85.000</td>
-                                <td>
-                                    <a href="#" class="btn btn-sm btn-warning me-1">Modifier</a>
-                                    <a href="#" class="btn btn-sm btn-danger">Supprimer</a>
-                                </td>
+                                <td colspan="6" class="text-center">Aucun produit trouvé dans cette commande.</td>
                             </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Écran 27" Full HD</td>
-                                <td>1</td>
-                                <td>600.000</td>
-                                <td>600.000</td>
-                                <td>
-                                    <a href="#" class="btn btn-sm btn-warning me-1">Modifier</a>
-                                    <a href="#" class="btn btn-sm btn-danger">Supprimer</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Casque Audio Bluetooth</td>
-                                <td>2</td>
-                                <td>150.000</td>
-                                <td>300.000</td>
-                                <td>
-                                    <a href="#" class="btn btn-sm btn-warning me-1">Modifier</a>
-                                    <a href="#" class="btn btn-sm btn-danger">Supprimer</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>Disque Dur SSD 1TB</td>
-                                <td>1</td>
-                                <td>250.000</td>
-                                <td>250.000</td>
-                                <td>
-                                    <a href="#" class="btn btn-sm btn-warning me-1">Modifier</a>
-                                    <a href="#" class="btn btn-sm btn-danger">Supprimer</a>
-                                </td>
-                            </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>

@@ -30,7 +30,8 @@ Gestion des Achats | Détails Achat
                     </div>
                     <div class="col-6 text-end">
                         <a href="/achats" class="btn btn-dark">Retour</a>
-                        <a href="{{ url_for('achat.update', achat_id=achat.id) }}" class="btn btn-warning ms-2">Modifier</a>
+                        <a href="{{ url_for('achat.update', achat_id=achat.id) }}"
+                            class="btn btn-warning ms-2">Modifier</a>
                     </div>
                 </div>
             </div>
@@ -42,16 +43,11 @@ Gestion des Achats | Détails Achat
                                 <strong>ID: </strong><span>{{ achat.id }}</span>
                             </li>
                             <li class="list-group-item">
-                                <strong>Produit: </strong>
-                                <span>
-                                    {{ produit.designation if produit else 'Produit ID: ' + achat.produit_id|string }}
-                                </span>
+                                <strong>Quantité: </strong><span>{{ achat.quantite }}</span>
                             </li>
                             <li class="list-group-item">
-                                <strong>Fournisseur: </strong>
-                                <span>
-                                    {{ fournisseur.nom if fournisseur else 'Fournisseur ID: ' + achat.fournisseur_id|string }}
-                                </span>
+                                <strong>Date: </strong>
+                                <span>{{ achat.date_creation.strftime('%d/%m/%Y %H:%M') }}</span>
                             </li>
                         </ul>
                     </div>
@@ -60,24 +56,19 @@ Gestion des Achats | Détails Achat
                             <li class="list-group-item">
                                 <strong>Prix unitaire: </strong><span>{{ achat.prix_achat_unitaire }} DT</span>
                             </li>
-                            <li class="list-group-item">
-                                <strong>Quantité: </strong><span>{{ achat.quantite }}</span>
-                            </li>
+
                             <li class="list-group-item">
                                 <strong>Prix total: </strong><span>{{ achat.prix_achat_total }} DT</span>
                             </li>
-                            <li class="list-group-item">
-                                <strong>Date: </strong>
-                                <span>{{ achat.date_creation.strftime('%d/%m/%Y %H:%M') }}</span>
-                            </li>
+
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="card-footer">
                 <form action="{{ url_for('achat.delete', achat_id=achat.id) }}" method="POST" class="d-inline">
-                    <button type="submit" class="btn btn-danger" 
-                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet achat ?')">
+                    <button type="submit" class="btn btn-danger"
+                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet achat ?')">
                         Supprimer
                     </button>
                 </form>
@@ -94,6 +85,7 @@ Gestion des Achats | Détails Achat
                 <h4>Informations sur le produit</h4>
             </div>
             <div class="card-body">
+                {% set produit = achat.produit %}
                 {% if produit %}
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
@@ -119,6 +111,7 @@ Gestion des Achats | Détails Achat
                 <h4>Informations sur le fournisseur</h4>
             </div>
             <div class="card-body">
+                 {% set fournisseur = achat.fournisseur %}
                 {% if fournisseur %}
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">

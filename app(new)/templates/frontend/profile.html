@@ -1,0 +1,134 @@
+{% extends "layouts/base_client.html" %}
+
+{% block main %}
+<main class="main">
+    <!-- Page Title -->
+    <div class="page-title light-background position-relative">
+        <div class="container">
+            <nav class="breadcrumbs">
+                <ol>
+                    <li><a href="/">Home</a></li>
+                    <li class="current">Mon Profil</li>
+                </ol>
+            </nav>
+            <h1>Mon Profil</h1>
+        </div>
+    </div><!-- End Page Title -->
+
+    <!-- Login Section -->
+    <section id="login" class="login section">
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+            <div class="row">
+                <div class="col-8" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="login-form-wrapper">
+                        <div class="login-header text-center">
+                            <h2>Modifier Mon Profil</h2>
+                            <p></p>
+                        </div>
+
+                        <form method="post" action="/profile/edit">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="mb-4">
+                                        <label for="nom" class="form-label">Nom</label>
+                                        <input type="text" class="form-control" name="nom" placeholder="Enter your nom"
+                                            required="" autocomplete="nom" value="{{ user.nom }}">
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="date_de_naissance" class="form-label">Date de naissance</label>
+                                        <input type="date" class="form-control" name="date_de_naissance" required=""
+                                            value="{{ user.date_de_naissance }}">
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="ville" class="form-label">Ville</label>
+                                        <input type="text" class="form-control" name="ville"
+                                            placeholder="Enter your ville" required="" autocomplete="ville"
+                                            value="{{ user.ville }}">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-4">
+                                        <label for="prenom" class="form-label">Prénom</label>
+                                        <input type="text" class="form-control" name="prenom"
+                                            placeholder="Enter your prénom" required="" autocomplete="prenom"
+                                            value="{{ user.prenom }}">
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="telephone" class="form-label">Téléphone</label>
+                                        <input type="text" class="form-control" name="telephone"
+                                            placeholder="Enter your téléphone" required="" autocomplete="telephone"
+                                            value="{{ user.telephone }}">
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="adresse" class="form-label">Adresse</label>
+                                        <input type="text" class="form-control" name="adresse"
+                                            placeholder="Enter your adresse" required="" autocomplete="adresse"
+                                            value="{{ user.adresse }}">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="mb-4">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input type="email" class="form-control" name="email"
+                                            placeholder="Enter your email" required="" autocomplete="email"
+                                            value="{{ user.email }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 offset-4">
+                                    <div class="d-grid gap-2 mb-4">
+                                        <button type="submit" class="btn btn-primary">Modifier</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-4" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="login-form-wrapper">
+                        <div class="login-header text-center">
+                            <h2>Modifier Mot de passe</h2>
+                            <p></p>
+                        </div>
+
+                        <form method="post" action="/profile/edit/password">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="mb-4">
+                                        <label for="current_password" class="form-label">Mot de passe actuel</label>
+                                        <input type="password" class="form-control" name="current_password"
+                                            placeholder="Enter your current password" required=""
+                                            autocomplete="current-password">
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="new_password" class="form-label">Nouveau mot de passe</label>
+                                        <input type="password" class="form-control" name="new_password"
+                                            placeholder="Enter your new password" required=""
+                                            autocomplete="new-password">
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="confirm_password" class="form-label">Confirmer le mot de
+                                            passe</label>
+                                        <input type="password" class="form-control" name="confirm_password"
+                                            placeholder="Confirm your new password" required=""
+                                            autocomplete="new-password">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-4 offset-4">
+                                    <div class="d-grid gap-2 mb-4">
+                                        <button type="submit" class="btn btn-primary">Modifier</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!-- /Login Section -->
+</main>
+{% endblock main %}

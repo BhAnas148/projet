@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Index - FashionStore Bootstrap Template</title>
+    <title>High Teck</title>
     <meta name="description" content="">
     <meta name="keywords" content="">
 
@@ -31,7 +31,7 @@
     <link href="/static/client/assets/css/main.css" rel="stylesheet">
 
     <!-- =======================================================
-  * Template Name: FashionStore
+  * Template Name: High Teck
   * Template URL: https://bootstrapmade.com/fashion-store-bootstrap-template/
   * Updated: Apr 26 2025 with Bootstrap v5.3.5
   * Author: BootstrapMade.com
@@ -61,9 +61,6 @@
                     </div>
 
                     <div class="col-lg-6">
-
-
-
                     </div>
                 </div>
             </div>
@@ -114,102 +111,38 @@
                                     <p class="mb-0">Accéder au compte &amp; gérer les commandes</p>
                                 </div>
                                 <div class="dropdown-body">
-								<a class="dropdown-item d-flex align-items-center" href="\compte">
-                    <i class="bi bi-person-circle me-2"></i>
-                    <span>Mon Profil</span>
-                  </a>
+                                    <a class="dropdown-item d-flex align-items-center" href="/profile">
+                                        <i class="bi bi-person-circle me-2"></i>
+                                        <span>Mon Profil</span>
                                     </a>
+                                    <a class="dropdown-item d-flex align-items-center" href="/mes-commandes">
+                                        <i class="bi bi-bag-check me-2"></i>
+                                        <span>Mes Commandes</span>
                                     </a>
-                                    </a>
-                                    </a>
+                                    <a class="dropdown-item d-flex align-items-center" href="/wishlist">
+                                        <i class="bi bi-heart me-2"></i>
+                                        <span>Ma Liste de Souhaits</span>
                                     </a>
                                 </div>
                                 <div class="dropdown-footer">
+                                    {% if session.get('LOGGED_IN') %}
+                                    <a href="/logout" class="btn btn-outline-primary w-100">Déconnexion</a>
+                                    {% else %}
                                     <a href="/login" class="btn btn-primary w-100 mb-2">Se Connecter</a>
                                     <a href="/register" class="btn btn-outline-primary w-100">Créer un compte</a>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
 
                         <!-- Wishlist -->
-                        <a href="wishlist.html" class="header-action-btn d-none d-md-flex">
+                        <a href="/wishlist" class="header-action-btn d-none d-md-flex">
                             <i class="bi bi-heart"></i>
                             <span class="action-text d-none d-md-inline-block">Liste de souhaits </span>
                             <span class="badge">0</span>
                         </a>
 
-                        <!-- Cart -->
-                        <div class="dropdown cart-dropdown">
-                            <button class="header-action-btn" data-bs-toggle="dropdown">
-                                <i class="bi bi-cart3"></i>
-                                <span class="action-text d-none d-md-inline-block">Panier</span>
-                                <span class="badge">3</span>
-                            </button>
-                            <div class="dropdown-menu cart-dropdown-menu">
-                                <div class="dropdown-header">
-                                    <h6>Panier d’achats</h6>
-                                </div>
-                                <div class="dropdown-body">
-                                    <div class="cart-items">
-                                        <!-- Cart Item 1 -->
-                                        <div class="cart-item">
-                                            <div class="cart-item-image">
-                                                <img src="assets/img/product/product-1.webp" alt="Product"
-                                                    class="img-fluid">
-                                            </div>
-                                            <div class="cart-item-content">
-                                                <h6 class="cart-item-title">Wireless Headphones</h6>
-                                                <div class="cart-item-meta">1 × $89.99</div>
-                                            </div>
-                                            <button class="cart-item-remove">
-                                                <i class="bi bi-x"></i>
-                                            </button>
-                                        </div>
-
-                                        <!-- Cart Item 2 -->
-                                        <div class="cart-item">
-                                            <div class="cart-item-image">
-                                                <img src="assets/img/product/product-2.webp" alt="Product"
-                                                    class="img-fluid">
-                                            </div>
-                                            <div class="cart-item-content">
-                                                <h6 class="cart-item-title">Smart Watch</h6>
-                                                <div class="cart-item-meta">1 × $129.99</div>
-                                            </div>
-                                            <button class="cart-item-remove">
-                                                <i class="bi bi-x"></i>
-                                            </button>
-                                        </div>
-
-                                        <!-- Cart Item 3 -->
-                                        <div class="cart-item">
-                                            <div class="cart-item-image">
-                                                <img src="assets/img/product/product-3.webp" alt="Product"
-                                                    class="img-fluid">
-                                            </div>
-                                            <div class="cart-item-content">
-                                                <h6 class="cart-item-title">Bluetooth Speaker</h6>
-                                                <div class="cart-item-meta">1 × $59.99</div>
-                                            </div>
-                                            <button class="cart-item-remove">
-                                                <i class="bi bi-x"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="dropdown-footer">
-                                    <div class="cart-total">
-                                        <span>Total:</span>
-                                        <span class="cart-total-price">$279.97</span>
-                                    </div>
-                                    <div class="cart-actions">
-                                        <a href="/cart" class="btn btn-outline-primary">Voir le panier
-                                        </a>
-                                        <a href="/vérifier" class="btn btn-primary">Finaliser la commande</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        {% include "frontend/cart/panier.html" %}
 
                         <!-- Mobile Navigation Toggle -->
                         <i class="mobile-nav-toggle d-xl-none bi bi-list me-0"></i>
@@ -225,15 +158,7 @@
                 <nav id="navmenu" class="navmenu">
                     <ul>
                         <li><a href="/" class="active">Home</a></li>
-                        <li><a href="\about">à propos</a></li>
-
-                        <ul>
-                            <ul>
-                            </ul>
-                            </li>
-
-                        </ul>
-                        </li>
+                        <li><a href="/about">à propos</a></li>
 
                         <!-- Products Mega Menu 1 -->
                         <li class="products-megamenu-1"><a href="#"><span>Features</span> <i
@@ -329,8 +254,8 @@
                                         <div class="product-grid">
                                             <div class="product-card">
                                                 <div class="product-image">
-                                                    <img src="\static\client\assets\img\product/product-1.webp" alt="Featured Product"
-                                                        loading="lazy">
+                                                    <img src="\static\client\assets\img\product/product-1.webp"
+                                                        alt="Featured Product" loading="lazy">
                                                 </div>
                                                 <div class="product-info">
                                                     <h5>Samsung Tv</h5>
@@ -340,8 +265,8 @@
                                             </div>
                                             <div class="product-card">
                                                 <div class="product-image">
-                                                    <img src="\static\client\assets\img\product/product-2.webp" alt="Featured Product"
-                                                        loading="lazy">
+                                                    <img src="\static\client\assets\img\product/product-2.webp"
+                                                        alt="Featured Product" loading="lazy">
                                                 </div>
                                                 <div class="product-info">
                                                     <h5>Motre</h5>
@@ -351,8 +276,8 @@
                                             </div>
                                             <div class="product-card">
                                                 <div class="product-image">
-                                                    <img src="\static\client\assets\img\product/product-3.webp" alt="Featured Product"
-                                                        loading="lazy">
+                                                    <img src="\static\client\assets\img\product/product-3.webp"
+                                                        alt="Featured Product" loading="lazy">
                                                 </div>
                                                 <div class="product-info">
                                                     <h5>Lunettes</h5>
@@ -362,8 +287,8 @@
                                             </div>
                                             <div class="product-card">
                                                 <div class="product-image">
-                                                    <img src="\static\client\assets\img\product/product-4.webp" alt="Featured Product"
-                                                        loading="lazy">
+                                                    <img src="\static\client\assets\img\product/product-4.webp"
+                                                        alt="Featured Product" loading="lazy">
                                                 </div>
                                                 <div class="product-info">
                                                     <h5>Vétement</h5>
@@ -380,8 +305,8 @@
                                         <div class="product-grid">
                                             <div class="product-card">
                                                 <div class="product-image">
-                                                    <img src="\static\client\assets\img\product/product-5.webp" alt="New Arrival"
-                                                        loading="lazy">
+                                                    <img src="\static\client\assets\img\product/product-5.webp"
+                                                        alt="New Arrival" loading="lazy">
                                                     <span class="badge-new">New</span>
                                                 </div>
                                                 <div class="product-info">
@@ -392,8 +317,8 @@
                                             </div>
                                             <div class="product-card">
                                                 <div class="product-image">
-                                                    <img src="\static\client\assets\img\product/product-6.webp" alt="New Arrival"
-                                                        loading="lazy">
+                                                    <img src="\static\client\assets\img\product/product-6.webp"
+                                                        alt="New Arrival" loading="lazy">
                                                     <span class="badge-new">New</span>
                                                 </div>
                                                 <div class="product-info">
@@ -404,8 +329,8 @@
                                             </div>
                                             <div class="product-card">
                                                 <div class="product-image">
-                                                    <img src="\static\client\assets\img\product/product-7.webp" alt="New Arrival"
-                                                        loading="lazy">
+                                                    <img src="\static\client\assets\img\product/product-7.webp"
+                                                        alt="New Arrival" loading="lazy">
                                                     <span class="badge-new">New</span>
                                                 </div>
                                                 <div class="product-info">
@@ -416,8 +341,8 @@
                                             </div>
                                             <div class="product-card">
                                                 <div class="product-image">
-                                                    <img src="\static\client\assets\img\product/product-8.webp" alt="New Arrival"
-                                                        loading="lazy">
+                                                    <img src="\static\client\assets\img\product/product-8.webp"
+                                                        alt="New Arrival" loading="lazy">
                                                     <span class="badge-new">New</span>
                                                 </div>
                                                 <div class="product-info">
@@ -435,21 +360,21 @@
                                         <div class="product-grid">
                                             <div class="product-card">
                                                 <div class="product-image">
-                                                    <img src="\static\client\assets\img\product/product-9.webp" alt="Sale Product"
-                                                        loading="lazy">
+                                                    <img src="\static\client\assets\img\product/product-9.webp"
+                                                        alt="Sale Product" loading="lazy">
                                                     <span class="badge-sale">-30%</span>
                                                 </div>
                                                 <div class="product-info">
                                                     <h5>Casques</h5>
-                                                    <p class="price"><span class="original-price"></span> 
+                                                    <p class="price"><span class="original-price"></span>
                                                     </p>
                                                     <a href="#" class="btn-view">Voir le produit</a>
                                                 </div>
                                             </div>
                                             <div class="product-card">
                                                 <div class="product-image">
-                                                    <img src="\static\client\assets\img\product/product-10.webp" alt="Sale Product"
-                                                        loading="lazy">
+                                                    <img src="\static\client\assets\img\product/product-10.webp"
+                                                        alt="Sale Product" loading="lazy">
                                                     <span class="badge-sale">-25%</span>
                                                 </div>
                                                 <div class="product-info">
@@ -461,8 +386,8 @@
                                             </div>
                                             <div class="product-card">
                                                 <div class="product-image">
-                                                    <img src="\static\client\assets\img\product/product-11.webp" alt="Sale Product"
-                                                        loading="lazy">
+                                                    <img src="\static\client\assets\img\product/product-11.webp"
+                                                        alt="Sale Product" loading="lazy">
                                                     <span class="badge-sale">-40%</span>
                                                 </div>
                                                 <div class="product-info">
@@ -474,8 +399,8 @@
                                             </div>
                                             <div class="product-card">
                                                 <div class="product-image">
-                                                    <img src="\static\client\assets\img\product/product-12.webp" alt="Sale Product"
-                                                        loading="lazy">
+                                                    <img src="\static\client\assets\img\product/product-12.webp"
+                                                        alt="Sale Product" loading="lazy">
                                                     <span class="badge-sale">-20%</span>
                                                 </div>
                                                 <div class="product-info">
@@ -540,9 +465,13 @@
                             </div><!-- End Products Mega Menu 1 Desktop View -->
 
                         </li><!-- End Products Mega Menu 1 -->
+
                         <!-- Products Mega Menu 2 -->
-                        <li class="products-megamenu-2"><a href="#"><span>Tout Nos Produit</span> <i
-                                    class="bi bi-chevron-down toggle-dropdown"></i></a>
+                        <li class="products-megamenu-2">
+                            <a href="#">
+                                <span>Tout Nos Produit</span>
+                                <i class="bi bi-chevron-down toggle-dropdown"></i>
+                            </a>
 
                             <!-- Products Mega Menu 2 Mobile View -->
                             <ul class="mobile-megamenu">
@@ -605,14 +534,18 @@
                                         <li class="nav-item" role="presentation">
                                             <button class="nav-link active" id="womens-tab" data-bs-toggle="tab"
                                                 data-bs-target="#womens-content-1883" type="button" aria-selected="true"
-                                                role="tab">Page 1</button>
+                                                role="tab">
+                                                Page 1
+                                            </button>
                                         </li>
                                         <li class="nav-item" role="presentation">
                                             <button class="nav-link" id="mens-tab" data-bs-toggle="tab"
                                                 data-bs-target="#mens-content-1883" type="button" aria-selected="false"
-                                                tabindex="-1" role="tab">Page 2</button>
+                                                tabindex="-1" role="tab">
+                                                Page 2
+                                            </button>
                                         </li>
-                                       
+
                                     </ul>
                                 </div>
 
@@ -633,9 +566,9 @@
 
                                                 <div class="category-links">
                                                     <div class="link-row">
-                                                        <a href="#">Smartphone</a>
+                                                        <a href="/2/produits">Smartphone</a>
                                                         <a href="#">Réfrigérateur</a>
-                                                        <a href="#">Sacs à main	</a>
+                                                        <a href="#">Sacs à main </a>
                                                         <a href="#">Parfum femme</a>
                                                     </div>
                                                     <div class="link-row">
@@ -678,10 +611,11 @@
                                             </div>
                                             <div class="featured-section">
                                                 <div class="featured-image">
-                                                    <img src="static\client\assets\img\ss.png"
+                                                    <img src="/static/client/assets/img/ss.png"
                                                         alt="Women's Heels Collection">
                                                     <div class="featured-content">
-                                                        <h3 style="color: white;">Votre confiance<br>notre<br>engagement.</h3>
+                                                        <h3 style="color: white;">Votre
+                                                            confiance<br>notre<br>engagement.</h3>
                                                         <a href="#" class="btn-shop">Achetez maintenant</a>
                                                     </div>
                                                 </div>
@@ -705,16 +639,16 @@
                                                         <a href="#">Vélo</a>
                                                     </div>
                                                     <div class="link-row">
-                                                        <a href="#">Table à manger	</a>
+                                                        <a href="#">Table à manger </a>
                                                         <a href="#">Ballon de foot </a>
->
+                                                        >
                                                     </div>
                                                     <div class="link-row">
                                                         <a href="#">Tapis</a>
                                                         <a href="#">Élastiques fitness</a>
 
                                                     </div>
-                                              
+
                                                     <div class="link-row">
                                                         <a href="#">View all</a>
                                                         <a href="#">View all</a>
@@ -723,22 +657,24 @@
                                             </div>
                                             <div class="featured-section">
                                                 <div class="featured-image">
-                                                    <img src="static\client\assets\img\ss2.png"
+                                                    <img src="/static/client/assets/img/ss2.png"
                                                         alt="Men's Footwear Collection">
                                                     <div class="featured-content">
-<h3 class="text-white">Ensemble vers<br>votre<br>réussite.</h3>
+                                                        <h3 class="text-white">Ensemble vers<br>votre<br>réussite.</h3>
                                                         <a href="#" class="btn-shop">Achetez maintenant</a>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
 
-                                   
+
 
                         </li><!-- End Products Mega Menu 2 -->
 
-                        <li><a href="\contact">Contact</a></li>
+                        <li><a href="/contact">Contact</a></li>
 
                     </ul>
                 </nav>
@@ -764,10 +700,18 @@
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">🚚 Livraison gratuite pour toute commande supérieure à DT 300</div>
                         <div class="swiper-slide">💰 Garantie satisfait ou remboursé sous 30 jours</div>
-                        <div class="swiper-slide">🎁 20 % de réduction sur votre première commande - Utilisez le code : FIRST20</div>
-                        <div class="swiper-slide">⚡ Vente flash ! Jusqu’à 70 % de réduction sur une sélection d’articles</div>
+                        <div class="swiper-slide">🎁 20 % de réduction sur votre première commande - Utilisez le code :
+                            FIRST20</div>
+                        <div class="swiper-slide">⚡ Vente flash ! Jusqu’à 70 % de réduction sur une sélection d’articles
+                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                {% include "_flash.html" %}
             </div>
         </div>
 
@@ -797,8 +741,8 @@
                 <div class="row gy-4">
                     <div class="col-lg-4 col-md-6">
                         <div class="footer-widget footer-about">
-                            <a href="index.html" class="logo">
-                                <span class="sitename">FashionStore</span>
+                            <a href="/" class="logo">
+                                <span class="sitename">HighTeck</span>
                             </a>
                             <p>Découvrez une expérience d’achat fluide et agréable, pensée pour répondre à tous vos
                                 besoins,
@@ -823,12 +767,12 @@
                         <div class="footer-widget">
                             <h4>Shop</h4>
                             <ul class="footer-links">
-                                <li><a href="category.html">Nouveautés</a></li>
-                                <li><a href="category.html">Meilleures ventes</a></li>
-                                <li><a href="category.html">Mode&Accessoires</a></li>
-                                <li><a href="category.html">Beauté & Soins</a></li>
-                                <li><a href="category.html">Sports & Loisirs	</a></li>
-                                <li><a href="category.html">Ventes</a></li>
+                                <li><a href="#">Nouveautés</a></li>
+                                <li><a href="#">Meilleures ventes</a></li>
+                                <li><a href="#">Mode&Accessoires</a></li>
+                                <li><a href="#">Beauté & Soins</a></li>
+                                <li><a href="#">Sports & Loisirs </a></li>
+                                <li><a href="#">Ventes</a></li>
                             </ul>
                         </div>
                     </div>
@@ -837,12 +781,12 @@
                         <div class="footer-widget">
                             <h4>Support</h4>
                             <ul class="footer-links">
-                                <li><a href="support.html">Help Center</a></li>
-                                <li><a href="account.html">Order Status</a></li>
-                                <li><a href="shiping-info.html">Shipping Info</a></li>
-                                <li><a href="return-policy.html">Returns &amp; Exchanges</a></li>
+                                <li><a href="#">Help Center</a></li>
+                                <li><a href="#">Order Status</a></li>
+                                <li><a href="#">Shipping Info</a></li>
+                                <li><a href="#">Returns &amp; Exchanges</a></li>
                                 <li><a href="#">Size Guide</a></li>
-                                <li><a href="contact.html">Contact Us</a></li>
+                                <li><a href="#">Contact Us</a></li>
                             </ul>
                         </div>
                     </div>
@@ -904,9 +848,9 @@
                             </div>
 
                             <div class="legal-links">
-                                <a href="tos.html">Terms</a>
-                                <a href="privacy.html">Privacy</a>
-                                <a href="tos.html">Cookies</a>
+                                <a href="/tos">Terms</a>
+                                <a href="/privacy">Privacy</a>
+                                <a href="/tos">Cookies</a>
                             </div>
                         </div>
                     </div>
@@ -936,6 +880,10 @@
 
     <!-- Main JS File -->
     <script src="/static/client/assets/js/main.js"></script>
+
+    {% block js %}
+
+    {% endblock js %}
 
 </body>
 

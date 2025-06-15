@@ -53,7 +53,9 @@ Gestion des Produits | Détails Produit
                     <div class="col-6">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
-                                <strong>Prix de vente: </strong><span>{{ produit.prix_vente }} DT</span>
+                                <strong>Prix de vente: </strong><span>
+                                    {{ "%.3f"|format(produit.prix_vente) }} TND
+                                </span>
                             </li>
                             <li class="list-group-item">
                                 <strong>Description: </strong>

@@ -3,17 +3,16 @@ from src.controllers.UserController import UserController
 
 user_routes = Blueprint('users', __name__)
 
+
 @user_routes.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == "POST":
         email = request.form.get('email')
         password = request.form.get('password')
         user = UserController.login(email, password)
-        
-        if isinstance(user, tuple) and not user[0]:  # Si c'est une erreur
-            flash(user[1], 'danger')
-            return redirect(url_for('users.login'))
-        elif user:  # Si authentification réussie
+
+        print(user)
+        if user:  # Si authentification réussie
             session['LOGGED_IN'] = True
             session['user_id'] = user.id
             session['user_role'] = user.role.value
@@ -26,10 +25,12 @@ def login():
 
     return render_template('login.html')
 
+
 @user_routes.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for('home.home'))
+
 
 @user_routes.route('/register', methods=['GET', 'POST'])
 def register():
@@ -49,7 +50,7 @@ def register():
 
         errors = []
         user_data = {}
-        
+
         for field, error_msg in required_fields.items():
             value = request.form.get(field)
             if not value:
@@ -82,10 +83,12 @@ def register():
         success, result = UserController.create(controller_data)
 
         if success:
-            flash("Compte créé avec succès. Vous pouvez maintenant vous connecter.", 'success')
+            flash(
+                "Compte créé avec succès. Vous pouvez maintenant vous connecter.", 'success')
             return redirect(url_for('users.login'))
         else:
-            flash(result if isinstance(result, str) else "Erreur lors de la création du compte", 'danger')
+            flash(result if isinstance(result, str)
+                  else "Erreur lors de la création du compte", 'danger')
             return redirect(url_for('users.register'))
 
     return render_template('register.html')
