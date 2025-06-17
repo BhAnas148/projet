@@ -92,9 +92,15 @@
                                                     <i class="bi bi-eye"></i>
                                                 </button>
                                             </div>
-                                            <div class="add-to-cart-container">
-                                                <button type="button" class="add-to-cart-btn">Add to Cart</button>
+                                            <div class="add-to-cart-container product-actions">
+
+
+                                                <a class="btn btn-primary add-to-cart-btn"
+                                                    href="/add_to_cart/{{ produit.id }}">
+                                                    <i class="bi bi-cart-plus"></i> ajouter au panier
+                                                </a>
                                             </div>
+
                                         </div>
                                     </div>
                                     <div class="product-content">
@@ -125,3 +131,8 @@
     </div>
 </main>
 {% endblock main %}
+{% block js %}
+<script>
+
+</script>
+{% endblock js %}

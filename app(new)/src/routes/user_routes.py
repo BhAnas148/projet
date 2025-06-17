@@ -35,13 +35,12 @@ def logout():
 @user_routes.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        # Validation des données
+        # Validation des données (sans confirm_password)
         required_fields = {
             'nom': "Le nom est obligatoire",
             'prenom': "Le prénom est obligatoire",
             'email': "L'email est obligatoire",
-            'password': "Le mot de passe est obligatoire",
-            'confirm_password': "La confirmation du mot de passe est obligatoire",
+            'mot_de_passe': "Le mot de passe est obligatoire",
             'date_de_naissance': "La date de naissance est obligatoire",
             'telephone': "Le téléphone est obligatoire",
             'ville': "La ville est obligatoire",
@@ -57,10 +56,6 @@ def register():
                 errors.append(error_msg)
             user_data[field] = value
 
-        # Vérification spécifique pour les mots de passe
-        if user_data['password'] != user_data['confirm_password']:
-            errors.append("Les mots de passe ne correspondent pas")
-
         if errors:
             for error in errors:
                 flash(error, 'danger')
@@ -71,23 +66,22 @@ def register():
             'nom': user_data['nom'],
             'prenom': user_data['prenom'],
             'email': user_data['email'],
-            'mot_de_passe': user_data['password'],
+            'mot_de_passe': user_data['mot_de_passe'],
             'date_de_naissance': user_data['date_de_naissance'],
             'telephone': user_data['telephone'],
             'ville': user_data['ville'],
             'adresse': user_data['adresse'],
-            'role': 'user'  # Rôle par défaut
+            'role': 'client'  # Rôle par défaut
         }
 
         # Création de l'utilisateur
         success, result = UserController.create(controller_data)
 
         if success:
-            flash(
-                "Compte créé avec succès. Vous pouvez maintenant vous connecter.", 'success')
+            flash("Compte créé avec succès. Vous pouvez maintenant vous connecter.", 'success')
             return redirect(url_for('users.login'))
         else:
-            flash(result if isinstance(result, str)
+            flash(result if isinstance(result, str) 
                   else "Erreur lors de la création du compte", 'danger')
             return redirect(url_for('users.register'))
 

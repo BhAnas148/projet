@@ -8,10 +8,10 @@
             <nav class="breadcrumbs">
                 <ol>
                     <li><a href="index.html">Home</a></li>
-                    <li class="current">Cart</li>
+                    <li class="current">Panier</li>
                 </ol>
             </nav>
-            <h1>Cart</h1>
+            <h1>Panier</h1>
         </div>
     </div><!-- End Page Title -->
 
@@ -104,10 +104,10 @@
                                 </div>
                                 <div class="col-lg-6 text-md-end">
                                     <button id="update-cart-btn" class="btn btn-outline-heading me-2">
-                                        <i class="bi bi-arrow-clockwise"></i> Update Cart
+                                        <i class="bi bi-arrow-clockwise"></i> Mettre à jour le panier
                                     </button>
                                     <button id="clear-cart-btn" class="btn btn-outline-remove">
-                                        <i class="bi bi-trash"></i> Clear Cart
+                                        <i class="bi bi-trash"></i> vider le panier
                                     </button>
                                 </div>
                             </div>
@@ -116,7 +116,7 @@
 
                     {% if suggestions %}
                     <div class="cart-summary">
-                        <h4 class="summary-title">Suggessions</h4>
+                        <h4 class="summary-title">Recommandations</h4>
 
                         <div class="cart-items">
                             <div class="cart-header d-none d-lg-block">
@@ -156,7 +156,7 @@
                                     <div class="col-lg-3 col-12 mt-3 mt-lg-0 text-right">
                                         <a class="btn btn-primary add-to-cart-btn"
                                             href="/add_to_cart/{{ suggestion.produit_id }}">
-                                            <i class="bi bi-cart-plus"></i> Add to Cart
+                                            <i class="bi bi-cart-plus"></i> ajouter au panier
                                         </a>
                                     </div>
                                 </div>

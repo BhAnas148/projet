@@ -136,7 +136,7 @@ def add_to_cart_with_suggestion(suggestion_produit_id):
     )
     session['total'] = round(total, 2)  # optional rounding
 
-    return redirect(url_for('frontend.cart'))
+    return redirect(request.referrer or url_for('frontend.cart'))
 
 
 @frontend_routes.route('/add_to_cart', methods=['POST'])

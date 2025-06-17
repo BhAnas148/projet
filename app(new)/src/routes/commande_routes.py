@@ -7,10 +7,12 @@ from src.controllers.ProduitController import ProduitController
 # Blueprint name is 'commandes' (plural)
 commande_routes = Blueprint('commandes', __name__, url_prefix='/commandes')
 
+
 @commande_routes.route('/')
 def index():
     commandes = CommandeController.read_all()
     return render_template('commandes/index.html', commandes=commandes)
+
 
 @commande_routes.route('/create', methods=['GET', 'POST'])
 def create():
@@ -21,7 +23,7 @@ def create():
             'nb_article': 0,
         }
         success, result = CommandeController.create(data)
-       
+
         if success:
             flash('Commande créée avec succès.', 'success')
             return redirect(url_for('commandes.read_one', commande_id=result.id))
@@ -30,15 +32,15 @@ def create():
     clients = UserController.get_users_by_role('client')
     return render_template('commandes/create.html', clients=clients)
 
+
 @commande_routes.route('/details/<int:commande_id>')
 def read_one(commande_id):
     commande = CommandeController.read_one(commande_id)
     if commande:
         produits = CommandeProduitController.read_all(commande_id)
-        nb_article = sum(p.quantite for p in produits)
-        montant_total = sum(p.prix_total for p in produits)
-        return render_template('commandes/details.html', commande=commande, produits=produits, nb_article=nb_article, montant_total=montant_total)
+        return render_template('commandes/details.html', commande=commande, produits=produits)
     return redirect(url_for('commandes.index'))
+
 
 @commande_routes.route('/update/<int:commande_id>', methods=['GET', 'POST'])
 def update(commande_id):
@@ -59,6 +61,7 @@ def update(commande_id):
 
     return render_template('commandes/update.html', commande=commande)
 
+
 @commande_routes.route('/delete/<int:commande_id>')
 def delete(commande_id):
     success, result = CommandeController.delete(commande_id)
@@ -73,14 +76,14 @@ def add(commande_id):
     commande = CommandeController.read_one(commande_id)
     if not commande:
         return redirect(url_for('commandes.index'))
-    
+
     if request.method == 'POST':
         produit_id = request.form['produit_id']
         produit = ProduitController.read_one(produit_id)
         if not produit:
             flash('Produit introuvable.', 'error')
             return redirect(url_for('commandes.read_one', commande_id=commande_id))
-        
+
         data = {
             'commande_id': commande_id,
             'produit_id': produit.id,
@@ -89,12 +92,20 @@ def add(commande_id):
         }
         success, result = CommandeProduitController.add_to_command(data)
         if success:
+            produits = CommandeProduitController.read_all(commande_id)
+            nb_article = sum(p.quantite for p in produits)
+            montant_total = sum(p.prix_total for p in produits)
+            success, content = CommandeController.update(commande_id, {
+                "nb_article": nb_article,
+                "montant_total": montant_total
+            })
+
             flash('Produit ajouté à la commande avec succès.', 'success')
             return redirect(url_for('commandes.read_one', commande_id=commande_id))
 
     produits = ProduitController.read_all()
     return render_template('commandes/commandes_produits/add.html', commande=commande, produits=produits)
-    
+
 
 @commande_routes.route('/details/<int:commande_id>/edit/<int:commande_produit_id>', methods=['GET', 'POST'])
 def update_produit(commande_id, commande_produit_id):
@@ -114,25 +125,53 @@ def update_produit(commande_id, commande_produit_id):
             flash('Produit introuvable.', 'error')
             return redirect(url_for('commandes.read_one', commande_id=commande_id))
         
+        # Assurez-vous que commande_id est bien inclus et non null
         data = {
-            'commande_id': commande_id,
+            'id': commande_produit_id,  # Ajouté pour s'assurer qu'on update le bon enregistrement
+            'commande_id': commande_id,  # Toujours inclure la commande_id
             'produit_id': produit.id,
             'prix_unitaire': produit.prix_vente,
             'quantite': request.form['quantite']
         }
+        
         success, result = CommandeProduitController.update(commande_produit_id, data)
         if success:
+            produits = CommandeProduitController.read_all(commande_id)
+            nb_article = sum(p.quantite for p in produits)
+            montant_total = sum(p.prix_total for p in produits)
+            CommandeController.update(commande_id, {
+                "nb_article": nb_article,
+                "montant_total": montant_total
+            })
+            
             flash('Produit mis à jour avec succès.', 'success')
             return redirect(url_for('commandes.read_one', commande_id=commande_id))
         flash(result, 'error')
 
     produits = ProduitController.read_all()
-    return render_template('commandes/commandes_produits/edit.html', commande=commande, commande_produit=commande_produit, produits=produits)
+    return render_template('commandes/commandes_produits/edit.html', 
+                         commande=commande, 
+                         commande_produit=commande_produit, 
+                         produits=produits)
+
 
 @commande_routes.route('/details/<int:commande_id>/remove/<int:commande_produit_id>')
 def delete_produit(commande_id, commande_produit_id):
+    commande = CommandeController.read_one(commande_id)
+    if not commande:
+        return redirect(url_for('commandes.index'))
+    
     success, result = CommandeProduitController.delete(commande_produit_id)
     if success:
+        # Mise à jour des totaux de la commande après suppression
+        produits = CommandeProduitController.read_all(commande_id)
+        nb_article = sum(p.quantite for p in produits)
+        montant_total = sum(p.prix_total for p in produits)
+        success, content = CommandeController.update(commande_id, {
+            "nb_article": nb_article,
+            "montant_total": montant_total
+        })
+        
         flash('Produit supprimé de la commande avec succès.', 'success')
     else:
         flash(result, 'error')

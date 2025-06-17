@@ -128,7 +128,7 @@
                         <!-- Action Buttons -->
                         <div class="product-actions">
                             <button class="btn btn-primary add-to-cart-btn" id="add-to-cart-btn">
-                                <i class="bi bi-cart-plus"></i> Add to Cart
+                                <i class="bi bi-cart-plus"></i> Ajouter Panier1
                             </button>
 
                             <button class="btn btn-outline-secondary wishlist-btn" aria-label="Add to wishlist">
@@ -236,9 +236,10 @@
 
         if (response.ok) {
             const result = await response.json();
-            alert('Product added to cart successfully!');
+            alert('Produit ajouté au panier avec succès !');
+            location.reload();
         } else {
-            alert('Error adding product to cart:', result.error);
+            alert('Erreur lors de Ajout au Panier:', result.error);
         }
     });
 </script>
