@@ -255,7 +255,9 @@ def about():
 @frontend_routes.route('/mes-commandes')
 def mes_commandes():
     return render_template('frontend/commandes/index.html')
-
+@frontend_routes.route('/vérifier')
+def vérifier():
+    return render_template('frontend/vérifier.html')
 
 @frontend_routes.route('/profile')
 @is_logged_in
@@ -281,3 +283,4 @@ def profile_edit():
 def profile_edit_password():
     flash('This feature is not yet implemented.', 'warning')
     return redirect(url_for('frontend.profile'))
+#test
