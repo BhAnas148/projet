@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, url_for, redirect, request, flash, session
 from src.controllers.UserController import UserController
+from src.entities.user import User, UserRole
 
 user_routes = Blueprint('users', __name__)
 
@@ -11,13 +12,17 @@ def login():
         password = request.form.get('password')
         user = UserController.login(email, password)
 
-        print(user)
+        print(user.role)
         if user:  # Si authentification réussie
             session['LOGGED_IN'] = True
             session['user_id'] = user.id
             session['user_role'] = user.role.value
             session['user_name'] = user.nom
             session['user_prenom'] = user.prenom
+
+            if user.role in [UserRole.administrateur, UserRole.commercial]:
+                return redirect(url_for('commandes.index'))
+
             return redirect(url_for('home.home'))
         else:
             flash("Identifiants invalides", 'danger')
@@ -78,10 +83,11 @@ def register():
         success, result = UserController.create(controller_data)
 
         if success:
-            flash("Compte créé avec succès. Vous pouvez maintenant vous connecter.", 'success')
+            flash(
+                "Compte créé avec succès. Vous pouvez maintenant vous connecter.", 'success')
             return redirect(url_for('users.login'))
         else:
-            flash(result if isinstance(result, str) 
+            flash(result if isinstance(result, str)
                   else "Erreur lors de la création du compte", 'danger')
             return redirect(url_for('users.register'))
 

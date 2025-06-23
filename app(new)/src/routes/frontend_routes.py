@@ -10,6 +10,8 @@ from src.controllers.CategorieController import CategorieController
 from src.controllers.SousCategorieController import SousCategorieController
 from src.controllers.ProduitController import ProduitController
 from src.controllers.ImageController import ImageController
+from src.controllers.CommandeProduitController import CommandeProduitController
+from src.controllers.CommandeController import CommandeController
 
 from src.routes.utils import is_logged_in
 
@@ -253,11 +255,48 @@ def about():
 
 
 @frontend_routes.route('/mes-commandes')
+@is_logged_in
 def mes_commandes():
     return render_template('frontend/commandes/index.html')
-@frontend_routes.route('/vérifier')
-def vérifier():
-    return render_template('frontend/vérifier.html')
+
+@frontend_routes.route('/verifier')
+@is_logged_in
+def verifier():
+    return render_template('frontend/cart/verifier.html', func_user_read_one=UserController.read_one)
+
+@frontend_routes.route('/verifier/commander')
+@is_logged_in
+def verifier_commander():
+    cart = session.get('cart', {})
+    if not cart:
+        flash('Votre panier est vide.', 'warning')
+        return redirect(url_for('frontend.cart'))
+
+    total = session.get('total', 0)
+
+    data = {
+        'client_id': session.get('user_id'),
+        'montant_total': total,
+        'nb_article': sum(item['quantity'] for item in cart.values()),
+    }
+
+    success, commande = CommandeController.create(data)
+    
+    for key, qty in cart.items():
+        commande_produit_data = {
+            'commande_id': commande.id,
+            'produit_id': key,
+            'quantite': qty['quantity'],
+            'prix_unitaire': qty['prix_vente']
+        }
+        CommandeProduitController.add_to_command(commande_produit_data)
+
+    session.pop('cart', None)
+    session.pop('total', None)
+    session.pop('shipping', None)
+
+    flash('Commande passée avec succès.', 'success')
+    return redirect(url_for('home.home'))
 
 @frontend_routes.route('/profile')
 @is_logged_in
